@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Fasion - Shop</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -438,14 +438,35 @@
     }
 
     // --- (ฟังก์ชันเดิมทั้งหมด) ---
-    async function checkAndSeedData() {
+  async function checkAndSeedData() {
       const s = await db.collection('products').limit(1).get();
       if(s.empty) {
+        console.log("ฐานข้อมูลว่าง กำลังเพิ่มสินค้าตัวอย่าง...");
         const b = db.batch();
-        ['เสื้อผ้าแฟชั่น', 'กางเกง', 'รองเท้า'].forEach(c => {
-          for(let i=1;i<=20;i++) b.set(db.collection('products').doc(), {name:`${c} ${i}`, price:Math.floor(Math.random()*500)+100, stock:20, category:c, image:`https://source.unsplash.com/300x300/?${c==='กางเกง'?'jeans':c==='รองเท้า'?'shoes':'shirt'}&sig=${i}`, sold:0});
+        
+        // 🔥 รายการหมวดหมู่ใหม่ที่ตรงกับ HTML
+        const categories = ['เสื้อผ้าแฟชั่น', 'กางเกง', 'เสื้อฮู้ด', 'เครื่องประดับ']; 
+        
+        categories.forEach(c => {
+          let keyword = 'item'; // คำค้นหาภาพเริ่มต้น
+          if (c === 'เสื้อผ้าแฟชั่น') keyword = 'shirt';
+          if (c === 'กางเกง') keyword = 'jeans';
+          if (c === 'เสื้อฮู้ด') keyword = 'hoodie';
+          if (c === 'เครื่องประดับ') keyword = 'jewelry';
+
+          for(let i=1;i<=20;i++) {
+            b.set(db.collection('products').doc(), {
+              name: `${c} ${i}`, 
+              price: Math.floor(Math.random()*500)+100, 
+              stock: 20, 
+              category: c, 
+              image: `https://source.unsplash.com/300x300/?${keyword}&sig=${i}`, // ใช้ keyword ที่กำหนด
+              sold: 0
+            });
+          }
         });
         await b.commit();
+        console.log("เพิ่มสินค้าตัวอย่าง 80 ชิ้นเรียบร้อย!");
       }
     }
     function loadProductsFromDB() { db.collection('products').onSnapshot(s => { allProducts=[]; s.forEach(d=>allProducts.push({id:d.id,...d.data()})); renderProducts(allProducts); }); }
@@ -576,7 +597,7 @@
     function showQR() {
       const b=document.getElementById('bankSelect').value;
       document.getElementById('qrCodeContainer').style.display=b?'block':'none';
-      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0899999999/${totalAmount}`;
+      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0970482500/${totalAmount}`;
     }
     
     async function confirmOrder() {
