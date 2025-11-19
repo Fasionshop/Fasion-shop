@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fasion - Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- Global Styles --- */
+    :root { --primary: #ee4d2d; --bg: #f5f5f5; --white: #ffffff; --text: #333; }
+    body { font-family: 'Sarabun', sans-serif; background-color: var(--bg); margin: 0; padding-bottom: 70px; font-size: 16px; }
+    
+    /* Header */
+    header { background: linear-gradient(-180deg, #f53d2d, #f63); padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .search-bar { flex-grow: 1; background: white; padding: 8px 15px; border-radius: 5px; display: flex; align-items: center; }
+    .search-bar input { border: none; outline: none; width: 100%; margin-left: 10px; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
+    .icon-btn { color: white; font-size: 1.4rem; position: relative; cursor: pointer; display: flex; align-items: center; }
+    .cart-badge { position: absolute; top: -8px; right: -8px; background: #ffe13c; color: #ee4d2d; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid #ee4d2d; }
+    
+    /* 🔥 Profile Menu (Header) 🔥 */
+    .profile-menu { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: 5px; color: white; }
+    .header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; background: #eee; }
+    .header-name { font-size: 0.9rem; font-weight: 600; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Category */
+    .category-bar { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 15px; position: sticky; top: 60px; z-index: 90; }
+    .cat-item { white-space: nowrap; padding: 5px 15px; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; color: #666; transition: 0.3s; }
+    .cat-item.active { border-color: var(--primary); color: var(--primary); background-color: #fff5f1; font-weight: 600; }
+    
+    /* Product Grid */
+    .product-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
+    @media (max-width: 768px) { .product-container { grid-template-columns: repeat(2, 1fr); } }
+
+    .product-card { background: white; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: transform 0.2s; display: flex; flex-direction: column; animation: fadeIn 0.5s; position: relative; }
+    .product-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .p-img { width: 100%; aspect-ratio: 1 / 1; background-color: #ddd; object-fit: cover; }
+    .p-details { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .p-name { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 5px; }
+    .p-price { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
+    .p-stock { font-size: 0.75rem; color: #888; margin-top: 5px; }
+    .p-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 3px; cursor: pointer; font-family: 'Sarabun'; }
+    .p-btn:disabled { background: #ccc; }
+    
+    /* Fav Button */
+    .fav-btn { position: absolute; top: 8px; right: 8px; width: 35px; height: 35px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #ccc; font-size: 1.2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; border: none; z-index: 2; }
+    .fav-btn:hover { transform: scale(1.1); }
+    .fav-btn.active { color: #ff424f; }
+
+    /* Modal Styles */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-end; }
+    .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    
+    /* Confirm Modal */
+    .confirm-modal-box { background: white; padding: 25px; border-radius: 10px; text-align: center; width: 90%; max-width: 350px; animation: popIn 0.3s; }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .confirm-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+    .confirm-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #333; }
+    .confirm-desc { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
+    .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+    .btn-confirm-action { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-family: 'Sarabun'; font-weight: 600; }
+    .btn-yes { background: #ee4d2d; color: white; }
+    .btn-no { background: #eee; color: #333; }
+    .btn-ok { background: #4CAF50; color: white; width: 100%; }
+
+    /* Cart Item */
+    .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+    .mini-qty-box { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px; width: fit-content; }
+    .mini-qty-btn { width: 25px; height: 25px; border: none; background: #f8f8f8; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
+    .mini-qty-btn:hover { background: #eee; }
+    .mini-qty-val { width: 30px; text-align: center; font-size: 1rem; font-weight: 600; }
+
+    .close-btn { float: right; font-size: 1.5rem; cursor: pointer; }
+    .checkout-btn { background: var(--primary); color: white; width: 100%; padding: 15px; border: none; font-size: 1.2rem; margin-top: 15px; border-radius: 5px; font-family: 'Sarabun', sans-serif; font-weight: 600; }
+    
+    /* History */
+    .order-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff; }
+    .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.95rem; color: #555; }
+    .order-status { font-weight: 600; color: var(--primary); }
+    .order-items { font-size: 0.95rem; color: #333; }
+    .order-total { text-align: right; font-weight: 600; font-size: 1.2rem; color: var(--primary); margin-top: 10px; }
+    .item-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+
+    /* Chat & Toast */
+    .chat-btn { position: fixed; bottom: 80px; right: 20px; background: #ee4d2d; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 1000; font-size: 24px; }
+    .chat-window { display: none; position: fixed; bottom: 150px; right: 20px; width: 300px; height: 400px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; flex-direction: column; z-index: 1000; overflow: hidden; font-family: 'Sarabun'; }
+    .chat-header { background: #ee4d2d; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .chat-body { flex: 1; padding: 10px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
+    .chat-input-area { padding: 10px; border-top: 1px solid #ddd; display: flex; }
+    .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Sarabun'; }
+    .chat-input-area button { background: #ee4d2d; color: white; border: none; padding: 8px 15px; margin-left: 5px; border-radius: 20px; cursor: pointer; font-family: 'Sarabun'; }
+    .msg { padding: 8px 12px; border-radius: 15px; max-width: 80%; font-size: 1rem; }
+    .msg-user { background: #ee4d2d; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .msg-admin { background: #e0e0e0; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
+    #toast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.8); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 1rem; opacity: 0; transition: opacity 0.3s, visibility 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    #toast.show { visibility: visible; opacity: 1; }
+    #toast.error { background-color: rgba(220, 53, 69, 0.9); }
+
+    /* Forms & Qty */
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color:#555; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
+    .payment-options label { display: block; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 5px; cursor: pointer; display:flex; align-items:center; gap:10px; }
+    .payment-options input:checked + span { color: var(--primary); font-weight: 600; }
+    #bankDetails { display: none; background: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #eee; margin-top: 10px; animation: fadeIn 0.3s; }
+    .bank-select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd; font-family: 'Sarabun'; }
+    #qrCodeContainer { text-align: center; margin-top: 10px; display: none; }
+    #qrCodeContainer img { width: 200px; border: 1px solid #ddd; border-radius: 10px; }
+    .bank-info { font-size: 1rem; color: #555; text-align: center; margin-top: 5px; }
+    .qty-selector { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
+    .qty-btn { width: 40px; height: 40px; border: 1px solid #ddd; background: white; font-size: 1.2rem; cursor: pointer; color: #555; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    .qty-display { width: 60px; text-align: center; font-size: 1.2rem; font-weight: 600; border: none; font-family: 'Sarabun'; }
+    .modal-product-img { width: 100px; height: 100px; object-fit: cover; border-radius: 5px; margin-right: 15px; }
+    .modal-product-info { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+    .fav-item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .empty-fav { grid-column: span 2; text-align: center; color: #999; padding: 20px; }
+
+    /* 🔥🔥🔥 Profile Modal Styles (เพิ่มใหม่) 🔥🔥🔥 */
+    .profile-header-edit { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+    .profile-img-large { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 10px; }
+    .upload-label { cursor: pointer; color: var(--primary); font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #fff5f1; padding: 5px 15px; border-radius: 20px; transition: 0.2s; }
+    .upload-label:hover { background: #ffeae3; }
+    .logout-btn { width: 100%; background: #eee; color: #333; margin-top: 10px; font-family: 'Sarabun'; font-weight:600; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="search-bar">
+      <i class="fas fa-search" style="color: #666;"></i>
+      <input type="text" id="searchInput" placeholder="ค้นหาสินค้า..." onkeyup="filterProducts()">
+    </div>
+    
+    <div class="icon-btn" onclick="openFav()" title="รายการที่ชอบ"><i class="fas fa-heart"></i></div>
+    <div class="icon-btn" onclick="openHistory()" title="ประวัติการสั่งซื้อ"><i class="fas fa-history"></i></div>
+    <div class="icon-btn" onclick="openCart()" title="ตะกร้าสินค้า"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cartCount">0</span></div>
+    
+    <div id="authContainer">
+       <div id="loginBtn" onclick="window.location.href='login.html'" style="margin-left:5px; color:white; font-size:1rem; cursor:pointer; white-space: nowrap; display:none;">
+         <i class="fas fa-user-circle"></i> Login
+       </div>
+       
+       <div id="userProfileBtn" class="profile-menu" onclick="openProfileModal()" style="display:none;">
+         <img src="https://via.placeholder.com/50" class="header-avatar" id="headerAvatar">
+         <span class="header-name" id="headerName">User</span>
+       </div>
+    </div>
+  </header>
+
+  <div class="category-bar" id="categoryBar">
+    <div class="cat-item active" onclick="filterCategory('ทั้งหมด', this)">ทั้งหมด</div>
+    <div class="cat-item" onclick="filterCategory('เสื้อผ้าแฟชั่น', this)">เสื้อผ้าผช/ผญ</div>
+    <div class="cat-item" onclick="filterCategory('กางเกง', this)">กางเกงผช/ผญ</div>
+    <div class="cat-item" onclick="filterCategory('เสื้อฮู้ด', this)">เสื้อฮู้ด</div>
+    <div class="cat-item" onclick="filterCategory('เครื่องประดับ', this)">เครื่องประดับ</div>
+  </div>
+
+  <div id="toast"><i class="fas fa-check-circle"></i> <span>ข้อความแจ้งเตือน</span></div>
+  <div class="product-container" id="productList"><p style="width:100%; text-align:center;">กำลังโหลดสินค้า...</p></div>
+
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('profileModal')">&times;</span>
+      <h2>👤 แก้ไขโปรไฟล์</h2>
+      
+      <div class="profile-header-edit">
+        <img src="https://via.placeholder.com/100" class="profile-img-large" id="editAvatarPreview">
+        <label for="fileInput" class="upload-label">
+          <i class="fas fa-camera"></i> เปลี่ยนรูปโปรไฟล์
+        </label>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="previewImage(event)">
+      </div>
+      
+      <div class="form-group">
+        <label>อีเมล</label>
+        <input type="text" id="editEmail" class="form-control" disabled style="background:#f9f9f9; color:#888;">
+      </div>
+      
+      <div class="form-group">
+        <label>ชื่อที่แสดง (ชื่อเล่น)</label>
+        <input type="text" id="editName" class="form-control" placeholder="ตั้งชื่อของคุณ...">
+      </div>
+
+      <button class="checkout-btn" onclick="saveProfile()">บันทึกการเปลี่ยนแปลง</button>
+      <button class="checkout-btn logout-btn" onclick="closeModal('profileModal'); openLogoutConfirm()">ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <div id="qtyModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <span class="close-btn" onclick="closeModal('qtyModal')">&times;</span>
+      <h3 style="margin-top:0;">เลือกจำนวนสินค้า</h3>
+      <div class="modal-product-info">
+        <img id="qtyImg" class="modal-product-img" src="">
+        <div><div id="qtyName" style="font-weight:bold; margin-bottom:5px;"></div><div id="qtyPrice" style="color:var(--primary);"></div><div id="qtyStock" style="font-size:0.9rem; color:#888;"></div></div>
+      </div>
+      <div class="qty-selector">
+        <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
+        <input type="text" id="qtyDisplay" class="qty-display" value="1" readonly>
+        <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
+      </div>
+      <button class="checkout-btn" onclick="submitToCart()">ยืนยันใส่ตะกร้า</button>
+    </div>
+  </div>
+
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('cartModal')">&times;</span>
+      <h2>🛒 ตระกร้าสินค้า</h2>
+      <div id="cartItemsContainer"><p>ยังไม่มีสินค้าในตระกร้า</p></div>
+      <div style="margin-top: 20px; border-top: 2px dashed #ddd; padding-top:10px;">
+        <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:600;"><span>ยอดรวมทั้งหมด</span><span id="totalPrice" style="color:var(--primary)">฿0</span></div>
+      </div>
+      <button class="checkout-btn" onclick="openPayment()">ดำเนินการชำระเงิน</button>
+    </div>
+  </div>
+
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('paymentModal')">&times;</span>
+      <h2>📦 ข้อมูลจัดส่งและการชำระเงิน</h2>
+      <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd;">
+        <h3 style="font-size:1.1rem; color:#ee4d2d;">1. ที่อยู่จัดส่ง</h3>
+        <div class="form-group"><input type="text" id="custName" class="form-control" placeholder="ชื่อ-นามสกุล ผู้รับ"></div>
+        <div class="form-group"><input type="tel" id="custPhone" class="form-control" placeholder="เบอร์โทรศัพท์"></div>
+        <div class="form-group"><textarea id="custAddress" class="form-control" rows="3" placeholder="ที่อยู่จัดส่ง..."></textarea></div>
+      </div>
+      <div>
+        <h3 style="font-size:1.1rem; color:#ee4d2d;">2. วิธีชำระเงิน</h3>
+        <div class="payment-options">
+          <label onclick="toggleBank(false)"><input type="radio" name="payment" value="cod" checked> <span><i class="fas fa-truck"></i> เก็บเงินปลายทาง (COD)</span></label>
+          <label onclick="toggleBank(true)"><input type="radio" name="payment" value="bank"> <span><i class="fas fa-university"></i> โอนผ่านธนาคาร / QR</span></label>
+          <div id="bankDetails">
+             <p style="font-size:0.95rem; margin-bottom:5px;">เลือกธนาคาร:</p>
+             <select id="bankSelect" class="bank-select" onchange="showQR()">
+               <option value="">-- เลือก --</option>
+               <option value="kbank">กสิกรไทย (KBANK)</option>
+               <option value="scb">ไทยพาณิชย์ (SCB)</option>
+               <option value="promptpay">พร้อมเพย์</option>
+             </select>
+             <div id="qrCodeContainer">
+               <img id="qrImage" src="" alt="QR Code">
+               <div class="bank-info" id="bankInfoText"></div>
+               <div style="color:red; font-size:0.9rem; margin-top:5px;">*แนบสลิปในแชทหลังสั่งซื้อ</div>
+             </div>
+          </div>
+        </div>
+      </div>
+      <button class="checkout-btn" id="confirmPayBtn" onclick="confirmOrder()">ยืนยันการสั่งซื้อ</button>
+    </div>
+  </div>
+
+  <div id="historyModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('historyModal')">&times;</span>
+      <h2>🕒 ประวัติการสั่งซื้อ</h2>
+      <div id="historyContainer" style="margin-top:20px;"><p style="text-align:center;">กำลังโหลด...</p></div>
+    </div>
+  </div>
+
+  <div id="favModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('favModal')">&times;</span>
+      <h2>❤️ รายการที่ชอบ</h2>
+      <div id="favContainer" class="fav-item-grid" style="margin-top:20px;"></div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal" style="align-items: center;">
+    <div class="confirm-modal-box">
+      <div id="confirmIcon" class="confirm-icon">❓</div>
+      <div id="confirmTitle" class="confirm-title">ยืนยัน?</div>
+      <div id="confirmDesc" class="confirm-desc">ข้อความ...</div>
+      <div class="confirm-actions">
+        <button class="btn-confirm-action btn-no" onclick="closeModal('confirmModal')">ยกเลิก</button>
+        <button class="btn-confirm-action btn-yes" id="btnConfirmAction">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="successModal" class="modal" style="align-items: center;">
+    <div class="confirm-modal-box">
+      <div class="confirm-icon" style="color:#4CAF50;"><i class="fas fa-check-circle"></i></div>
+      <div class="confirm-title">สั่งซื้อสำเร็จ!</div>
+      <div class="confirm-desc">ขอบคุณที่ใช้บริการ ทางเราจะจัดส่งสินค้าให้เร็วที่สุด</div>
+      <div class="confirm-actions">
+        <button class="btn-confirm-action btn-ok" onclick="closeModal('successModal')">ตกลง</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comments"></i></div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header"><span>💬 สอบถามร้านค้า</span><span style="cursor:pointer" onclick="toggleChat()">&times;</span></div>
+    <div class="chat-body" id="chatBody"><div class="msg msg-admin">สวัสดีครับ! มีอะไรให้ช่วยไหมครับ?</div></div>
+    <div class="chat-input-area">
+      <input type="text" id="msgInput" placeholder="พิมพ์ข้อความ..." onkeypress="handleEnter(event)">
+      <button onclick="sendMsg()">ส่ง</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7lELq82KxJ0sFDf6jKmWPDFKpKqHJp0c",
+      authDomain: "king007-c72e2.firebaseapp.com",
+      projectId: "king007-c72e2",
+      storageBucket: "king007-c72e2.firebasestorage.app",
+      messagingSenderId: "136587774092",
+      appId: "1:136587774092:web:4ee67ff03cdee67bb393a9",
+      measurementId: "G-K39CYF7766"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    let allProducts=[], cart=[], userFavorites=[];
+    let totalAmount=0, currentSelectedId=null, currentQty=1;
+    let userId = localStorage.getItem('shop_userId');
+    if (!userId) { userId = 'guest_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('shop_userId', userId); }
+
+    window.onload = async () => {
+      auth.onAuthStateChanged(async user => {
+        if (user) {
+          userId = user.uid;
+          document.getElementById('loginBtn').style.display = 'none';
+          document.getElementById('userProfileBtn').style.display = 'flex';
+          
+          listenToChat();
+          loadFavorites();
+          await loadUserProfile(user); // 🔥 โหลดข้อมูลโปรไฟล์จาก DB
+        } else {
+          document.getElementById('loginBtn').style.display = 'block';
+          document.getElementById('userProfileBtn').style.display = 'none';
+          listenToChat();
+        }
+      });
+      await checkAndSeedData();
+      loadProductsFromDB();
+    };
+
+    // 🔥🔥🔥 ฟังก์ชันเกี่ยวกับ Profile 🔥🔥🔥
+    
+    let currentUserData = {};
+
+    async function loadUserProfile(user) {
+      // ดึงข้อมูล user จาก Firestore (ถ้ามี)
+      const doc = await db.collection('users').doc(user.uid).get();
+      if (doc.exists) {
+        currentUserData = doc.data();
+      } else {
+        // ถ้าไม่มี ให้ใช้ข้อมูลพื้นฐานจาก Auth
+        currentUserData = {
+          displayName: user.displayName || user.email.split('@')[0],
+          photoURL: user.photoURL || 'https://via.placeholder.com/150?text=User',
+          email: user.email
+        };
+      }
+      updateProfileUI();
+    }
+
+    function updateProfileUI() {
+      document.getElementById('headerName').innerText = currentUserData.displayName;
+      document.getElementById('headerAvatar').src = currentUserData.photoURL;
+      
+      // อัปเดตใน Modal ด้วย
+      document.getElementById('editName').value = currentUserData.displayName;
+      document.getElementById('editEmail').value = currentUserData.email;
+      document.getElementById('editAvatarPreview').src = currentUserData.photoURL;
+      
+      // อัปเดตชื่อในฟอร์มส่งของด้วย
+      document.getElementById('custName').value = currentUserData.displayName;
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    // แปลงไฟล์เป็น Base64
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('editAvatarPreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function saveProfile() {
+      const newName = document.getElementById('editName').value.trim();
+      const newImgSrc = document.getElementById('editAvatarPreview').src;
+      
+      if(!newName) return showToast('กรุณากรอกชื่อ', true);
+      
+      try {
+        // บันทึกลง Firestore
+        await db.collection('users').doc(userId).set({
+          displayName: newName,
+          photoURL: newImgSrc,
+          email: currentUserData.email
+        }, { merge: true });
+        
+        // อัปเดตตัวแปร Global
+        currentUserData.displayName = newName;
+        currentUserData.photoURL = newImgSrc;
+        updateProfileUI();
+        
+        showToast('บันทึกข้อมูลเรียบร้อย');
+        closeModal('profileModal');
+      } catch(e) {
+        console.error(e);
+        showToast('บันทึกไม่สำเร็จ', true);
+      }
+    }
+    
+    function openLogoutConfirm() {
+      document.getElementById('confirmIcon').innerHTML = '🚪';
+      document.getElementById('confirmTitle').innerText = 'ออกจากระบบ?';
+      document.getElementById('confirmDesc').innerText = 'คุณต้องการออกจากระบบใช่หรือไม่';
+      const btnConfirm = document.getElementById('btnConfirmAction');
+      btnConfirm.innerText = 'ออกจากระบบ';
+      btnConfirm.onclick = () => {
+        auth.signOut().then(() => {
+          localStorage.removeItem('shop_userId');
+          window.location.href = 'login.html';
+        });
+      };
+      document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    // --- (ฟังก์ชันเดิมทั้งหมด) ---
+    async function checkAndSeedData() {
+      const s = await db.collection('products').limit(1).get();
+      if(s.empty) {
+        const b = db.batch();
+        ['เสื้อผ้าแฟชั่น', 'กางเกง', 'รองเท้า'].forEach(c => {
+          for(let i=1;i<=20;i++) b.set(db.collection('products').doc(), {name:`${c} ${i}`, price:Math.floor(Math.random()*500)+100, stock:20, category:c, image:`https://source.unsplash.com/300x300/?${c==='กางเกง'?'jeans':c==='รองเท้า'?'shoes':'shirt'}&sig=${i}`, sold:0});
+        });
+        await b.commit();
+      }
+    }
+    function loadProductsFromDB() { db.collection('products').onSnapshot(s => { allProducts=[]; s.forEach(d=>allProducts.push({id:d.id,...d.data()})); renderProducts(allProducts); }); }
+    
+    function renderProducts(p) {
+      const c = document.getElementById('productList'); c.innerHTML='';
+      p.forEach(x => {
+        const isOut = x.stock <= 0;
+        const stockText = isOut ? '<span style="color:var(--primary);">สินค้าหมด</span>' : `เหลือ ${x.stock} ชิ้น`;
+        const soldText = `ขายแล้ว ${x.sold || 0} ชิ้น`;
+        const isFav = userFavorites.includes(x.id);
+
+        c.innerHTML += `
+          <div class="product-card">
+            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${x.id}')"><i class="${isFav ? 'fas' : 'far'} fa-heart"></i></button>
+            <img src="${x.image}" class="p-img">
+            <div class="p-details">
+              <div><div class="p-name">${x.name}</div><div class="p-stock">${stockText} | ${soldText}</div></div>
+              <div><div class="p-price">฿${x.price}</div><button class="p-btn" onclick="openQtyModal('${x.id}')" ${isOut?'disabled':''}>${isOut?'หมด':'ใส่ตะกร้า'}</button></div>
+            </div>
+          </div>`;
+      });
+    }
+
+    async function loadFavorites() {
+       const doc = await db.collection('favorites').doc(userId).get();
+       userFavorites = doc.exists ? (doc.data().ids || []) : [];
+       renderProducts(allProducts);
+    }
+
+    async function toggleFav(id) {
+       const idx = userFavorites.indexOf(id);
+       if(idx > -1) { userFavorites.splice(idx, 1); showToast('ลบจากรายการที่ชอบ'); } 
+       else { userFavorites.push(id); showToast('เพิ่มในรายการที่ชอบ'); }
+       
+       const btns = document.querySelectorAll(`.fav-btn[onclick="toggleFav('${id}')"]`);
+       btns.forEach(btn => {
+         if(userFavorites.includes(id)) { btn.classList.add('active'); btn.innerHTML = '<i class="fas fa-heart"></i>'; } 
+         else { btn.classList.remove('active'); btn.innerHTML = '<i class="far fa-heart"></i>'; }
+       });
+       await db.collection('favorites').doc(userId).set({ ids: userFavorites });
+    }
+
+    function openFav() {
+      document.getElementById('favModal').style.display = 'flex';
+      const con = document.getElementById('favContainer');
+      con.innerHTML = '';
+      const favItems = allProducts.filter(p => userFavorites.includes(p.id));
+      if(favItems.length === 0) return con.innerHTML = '<div class="empty-fav">ยังไม่มีรายการที่ชอบ</div>';
+      favItems.forEach(x => {
+        con.innerHTML += `<div class="product-card"><button class="fav-btn active" onclick="toggleFav('${x.id}'); openFav();"><i class="fas fa-heart"></i></button><img src="${x.image}" class="p-img"><div class="p-details"><div class="p-name">${x.name}</div><div class="p-price">฿${x.price}</div><button class="p-btn" onclick="openQtyModal('${x.id}'); closeModal('favModal');">ใส่ตะกร้า</button></div></div>`;
+      });
+    }
+    
+    function filterCategory(c,el) { document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active')); el.classList.add('active'); renderProducts(c==='ทั้งหมด'?allProducts:allProducts.filter(x=>x.category===c)); }
+    function filterProducts() { const t=document.getElementById('searchInput').value.toLowerCase(); renderProducts(allProducts.filter(x=>x.name.toLowerCase().includes(t))); }
+    
+    function openQtyModal(id) {
+      const p = allProducts.find(x=>x.id===id);
+      if(!p || p.stock<=0) return;
+      currentSelectedId=id; currentQty=1;
+      document.getElementById('qtyImg').src=p.image;
+      document.getElementById('qtyName').innerText=p.name;
+      document.getElementById('qtyPrice').innerText='฿'+p.price;
+      document.getElementById('qtyStock').innerText='มีสินค้า: '+p.stock;
+      document.getElementById('qtyDisplay').value=1;
+      document.getElementById('qtyModal').style.display='flex';
+    }
+    function changeQty(n) {
+      const p = allProducts.find(x=>x.id===currentSelectedId);
+      if(currentQty+n >=1 && currentQty+n <= p.stock) { currentQty+=n; document.getElementById('qtyDisplay').value=currentQty; }
+    }
+    function submitToCart() {
+      const p = allProducts.find(x=>x.id===currentSelectedId);
+      const ex = cart.find(x=>x.id===currentSelectedId);
+      if(ex) {
+        if(ex.qty+currentQty <= p.stock) ex.qty+=currentQty;
+        else { ex.qty = p.stock; showToast('ปรับจำนวนสินค้าเท่าที่มีในสต็อกแล้ว', true); }
+      } else cart.push({...p, qty:currentQty});
+      updateCart(); showToast('เพิ่มลงตะกร้าแล้ว'); closeModal('qtyModal');
+    }
+
+    function adjustCartQty(idx, change) {
+      const item = cart[idx];
+      const product = allProducts.find(p => p.id === item.id);
+      const maxStock = product ? product.stock : item.qty; 
+      let newQty = item.qty + change;
+      if(newQty > maxStock) { newQty = maxStock; showToast('สินค้ามีจำกัด ' + maxStock + ' ชิ้น', true); }
+      if(newQty < 1) newQty = 1;
+      cart[idx].qty = newQty;
+      openCart(); updateCart();
+    }
+
+    function updateCart() { document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0); }
+    
+    function openCart() {
+      const c = document.getElementById('cartItemsContainer'); c.innerHTML = cart.length?'':'<p>ว่างเปล่า</p>';
+      totalAmount=0;
+      cart.forEach((x,i) => { 
+        totalAmount+=x.price*x.qty; 
+        c.innerHTML+=`
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <b>${x.name}</b><br>
+              <span style="color:var(--primary);">฿${x.price}</span>
+              <div class="mini-qty-box">
+                <button class="mini-qty-btn" onclick="adjustCartQty(${i}, -1)">-</button>
+                <span class="mini-qty-val">${x.qty}</span>
+                <button class="mini-qty-btn" onclick="adjustCartQty(${i}, 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-item-controls">
+               <b style="margin-right:10px;">฿${x.price*x.qty}</b>
+               <button onclick="cart.splice(${i},1);openCart();updateCart()" style="border:none;background:none;color:#999;cursor:pointer;"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>`; 
+      });
+      document.getElementById('totalPrice').innerText='฿'+totalAmount;
+      document.getElementById('cartModal').style.display='flex';
+    }
+    
+    function openPayment() { 
+      if(!cart.length) return showToast('ไม่มีสินค้าในตะกร้า', true);
+      document.getElementById('cartModal').style.display='none'; 
+      document.getElementById('paymentModal').style.display='flex'; 
+    }
+    function toggleBank(s) { document.getElementById('bankDetails').style.display=s?'block':'none'; if(!s) document.getElementById('bankSelect').value=''; }
+    function showQR() {
+      const b=document.getElementById('bankSelect').value;
+      document.getElementById('qrCodeContainer').style.display=b?'block':'none';
+      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0899999999/${totalAmount}`;
+    }
+    
+    async function confirmOrder() {
+      const n=document.getElementById('custName').value, p=document.getElementById('custPhone').value, a=document.getElementById('custAddress').value;
+      const pm=document.querySelector('input[name="payment"]:checked').value;
+      const bankSelect = document.getElementById('bankSelect');
+      const bankName = bankSelect ? bankSelect.value : '';
+
+      if(!n||!p||!a) return showToast('กรุณากรอกข้อมูลให้ครบ', true);
+      if (pm === 'bank' && !bankName) return showToast('กรุณาเลือกธนาคาร', true);
+
+      const btn=document.getElementById('confirmPayBtn'); btn.disabled=true; btn.innerText="กำลังบันทึก...";
+      try {
+        await Promise.all(cart.map(i => db.runTransaction(async t => {
+          const d = await t.get(db.collection('products').doc(i.id));
+          if(!d.exists) throw "Err";
+          t.update(db.collection('products').doc(i.id), {stock:d.data().stock-i.qty, sold:(d.data().sold||0)+i.qty});
+        })));
+        await db.collection('orders').add({customer:{name:n,phone:p,address:a}, items:cart, total:totalAmount, paymentMethod:pm, bank:pm==='bank'?bankName:'-', user:userId, status:'pending', timestamp:firebase.firestore.FieldValue.serverTimestamp()});
+        sendMsgInternal(`[ระบบ] สั่งซื้อสำเร็จ ยอด ฿${totalAmount}`);
+        cart=[]; updateCart(); closeModal('paymentModal');
+        document.getElementById('successModal').style.display = 'flex';
+      } catch(e){ showToast('เกิดข้อผิดพลาด', true); } finally { btn.disabled=false; btn.innerText="ยืนยันการสั่งซื้อ"; }
+    }
+
+    async function openHistory() {
+      document.getElementById('historyModal').style.display = 'flex';
+      const con = document.getElementById('historyContainer');
+      con.innerHTML = '<p style="text-align:center;">กำลังโหลด...</p>';
+      const s = await db.collection('orders').where('user', '==', userId).get();
+      if(s.empty) return con.innerHTML = '<p style="text-align:center; color:#999;">ไม่มีประวัติการสั่งซื้อ</p>';
+      let ords = []; s.forEach(d => ords.push(d.data()));
+      ords.sort((a,b)=>(b.timestamp?.seconds||0)-(a.timestamp?.seconds||0));
+      con.innerHTML = '';
+      ords.forEach(o => {
+        let items = ''; o.items.forEach(i => items += `<div class="item-row"><span>${i.name} x${i.qty}</span><span>฿${i.price*i.qty}</span></div>`);
+        con.innerHTML += `<div class="order-card"><div class="order-header"><span>📅 ${o.timestamp?new Date(o.timestamp.seconds*1000).toLocaleString('th-TH'):'-'}</span><span class="order-status" style="color:${o.status==='completed'?'green':'orange'}">${o.status==='completed'?'สำเร็จ':'รอจัดส่ง'}</span></div><div class="order-items">${items}</div><div class="order-total">รวม: ฿${o.total}</div></div>`;
+      });
+    }
+
+    function toggleChat() { const w=document.getElementById('chatWindow'); w.style.display=w.style.display==='none'?'flex':'none'; if(w.style.display==='flex') scrollToBottom(); }
+    function scrollToBottom() { const b=document.getElementById('chatBody'); b.scrollTop=b.scrollHeight; }
+    function handleEnter(e) { if(e.key==='Enter') sendMsg(); }
+    function sendMsg() {
+      const txt = document.getElementById('msgInput').value.trim();
+      if(!txt) return;
+      document.getElementById('msgInput').value = '';
+      sendMsgInternal(txt);
+    }
+    function sendMsgInternal(text) {
+      db.collection('chats').doc(userId).collection('messages').add({ text: text, sender: 'user', timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+      db.collection('chats').doc(userId).set({ lastMessage: text, lastActive: firebase.firestore.FieldValue.serverTimestamp(), userId: userId, email: document.getElementById('custName').value || 'Guest' }, { merge: true });
+      setTimeout(() => autoReply(text), 1000);
+    }
+    function autoReply(t) {
+      let r=''; t=t.toLowerCase();
+      if(t.includes('สวัสดี')) r='สวัสดีครับ มีอะไรให้ช่วยไหมครับ';
+      if(r) {
+         db.collection('chats').doc(userId).collection('messages').add({text:r, sender:'admin', timestamp:firebase.firestore.FieldValue.serverTimestamp()});
+         db.collection('chats').doc(userId).set({ lastActive: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+      }
+    }
+    function listenToChat() {
+      db.collection('chats').doc(userId).collection('messages').orderBy('timestamp').onSnapshot(s => {
+        const b=document.getElementById('chatBody'); b.innerHTML='<div class="msg msg-admin">สวัสดีครับ!</div>';
+        s.forEach(d=> b.innerHTML+=`<div class="msg ${d.data().sender==='user'?'msg-user':'msg-admin'}">${d.data().text}</div>`);
+        scrollToBottom();
+      });
+    }
+    function closeModal(id){document.getElementById(id).style.display='none';}
+    
+    function showToast(text, isError = false){
+      const t=document.getElementById('toast');
+      t.querySelector('span').innerText = text;
+      if(isError) {
+        t.classList.add('error');
+        t.querySelector('i').className = "fas fa-exclamation-circle";
+      } else {
+        t.classList.remove('error');
+        t.querySelector('i').className = "fas fa-check-circle";
+      }
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 2500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Chat Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* 🔥 ใช้ฟอนต์ Sarabun 🔥 */
+    body { font-family: 'Sarabun', sans-serif; margin: 0; display: flex; height: 100vh; background: #f0f2f5; font-size: 16px; }
+    
+    /* Sidebar */
+    .sidebar { width: 320px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+    .sidebar-header { padding: 20px; background: #ee4d2d; color: white; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; }
+    .user-list { flex: 1; overflow-y: auto; }
+    
+    .user-item { 
+      padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; 
+      display: flex; align-items: center; gap: 12px; transition: 0.2s; 
+    }
+    .user-item:hover { background: #fff5f1; }
+    .user-item.active { background: #ffeae3; border-left: 5px solid #ee4d2d; }
+    
+    .user-avatar { width: 45px; height: 45px; background: #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #888; font-size: 1.2rem; flex-shrink: 0; }
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-weight: 600; color: #333; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-preview { font-size: 0.9rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-time { font-size: 0.75rem; color: #aaa; margin-top: 2px; }
+
+    /* Chat Area */
+    .chat-area { flex: 1; display: flex; flex-direction: column; background: #fff; }
+    .chat-area-header { padding: 15px 20px; border-bottom: 1px solid #ddd; font-weight: 600; background: #f9f9f9; display: flex; align-items: center; justify-content: space-between; }
+    .messages-box { flex: 1; padding: 20px; overflow-y: auto; background: #fff; display: flex; flex-direction: column; gap: 10px; }
+    
+    /* Input Area */
+    .input-box { padding: 20px; border-top: 1px solid #ddd; display: flex; gap: 10px; background: #f0f0f0; }
+    .input-box input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; padding-left: 20px; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
+    .input-box button { padding: 10px 25px; background: #ee4d2d; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: 'Sarabun', sans-serif; }
+    .input-box button:hover { background: #d73211; }
+    .input-box button:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* Message Bubbles */
+    .msg { padding: 10px 15px; border-radius: 15px; max-width: 70%; word-wrap: break-word; line-height: 1.4; position: relative; animation: fadeIn 0.2s; font-size: 1rem; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(5px);} to{opacity:1; transform:translateY(0);} }
+    .msg-admin { background: #ee4d2d; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .msg-user { background: #f1f1f1; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
+    
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #ccc; }
+    .empty-state i { font-size: 3rem; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <span><i class="fas fa-comments"></i> รายการแชท</span>
+      <small style="cursor:pointer; font-size:0.85rem; opacity:0.8;" onclick="location.reload()"><i class="fas fa-sync"></i> รีโหลด</small>
+    </div>
+    <div class="user-list" id="userList">
+      <div style="padding:20px; text-align:center; color:#999;">กำลังโหลดรายชื่อ...</div>
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div class="chat-area-header">
+      <span id="chatHeaderName">กรุณาเลือกแชทเพื่อเริ่มสนทนา</span>
+      <span id="chatHeaderId" style="font-size:0.9rem; color:#999; font-weight:normal;"></span>
+    </div>
+    <div class="messages-box" id="messagesBox">
+      <div class="empty-state">
+        <i class="far fa-comment-dots"></i>
+        <p>ยังไม่ได้เลือกรายการแชท</p>
+      </div>
+    </div>
+    <div class="input-box">
+      <input type="text" id="adminInput" placeholder="พิมพ์ข้อความตอบกลับ..." disabled onkeypress="handleEnter(event)">
+      <button id="sendBtn" onclick="sendReply()" disabled><i class="fas fa-paper-plane"></i> ส่ง</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7lELq82KxJ0sFDf6jKmWPDFKpKqHJp0c",
+      authDomain: "king007-c72e2.firebaseapp.com",
+      projectId: "king007-c72e2",
+      storageBucket: "king007-c72e2.firebasestorage.app",
+      messagingSenderId: "136587774092",
+      appId: "1:136587774092:web:4ee67ff03cdee67bb393a9",
+      measurementId: "G-K39CYF7766"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let currentChatId = null;
+    let unsubscribeMsg = null;
+
+    db.collection('chats').onSnapshot(snapshot => {
+      const userList = document.getElementById('userList');
+      const users = [];
+      snapshot.forEach(doc => { users.push({ id: doc.id, ...doc.data() }); });
+      users.sort((a, b) => {
+        const timeA = a.lastActive ? a.lastActive.seconds : 0;
+        const timeB = b.lastActive ? b.lastActive.seconds : 0;
+        return timeB - timeA;
+      });
+      userList.innerHTML = '';
+      if (users.length === 0) {
+        userList.innerHTML = '<div style="padding:30px; text-align:center; color:#ccc;">ยังไม่มีลูกค้าทักมา</div>';
+        return;
+      }
+      users.forEach(u => {
+        const div = document.createElement('div');
+        div.className = `user-item ${currentChatId === u.id ? 'active' : ''}`;
+        div.onclick = () => selectChat(u.id, u.email || u.id, div);
+        let timeStr = "";
+        if(u.lastActive) {
+          const date = u.lastActive.toDate();
+          timeStr = date.getHours() + ":" + date.getMinutes().toString().padStart(2, '0');
+        }
+        const displayName = u.email ? u.email.split('@')[0] : `Guest (${u.id.substr(0,4)})`;
+        div.innerHTML = `
+          <div class="user-avatar"><i class="fas fa-user"></i></div>
+          <div class="user-info">
+            <div style="display:flex; justify-content:space-between;">
+              <div class="user-name">${displayName}</div>
+              <div class="user-time">${timeStr}</div>
+            </div>
+            <div class="user-preview">${u.lastMessage || 'ส่งรูปภาพ/สติกเกอร์'}</div>
+          </div>
+        `;
+        userList.appendChild(div);
+      });
+    });
+
+    function selectChat(uid, name, element) {
+      currentChatId = uid;
+      document.querySelectorAll('.user-item').forEach(e => e.classList.remove('active'));
+      element.classList.add('active');
+      document.getElementById('chatHeaderName').innerText = name;
+      document.getElementById('chatHeaderId').innerText = `(ID: ${uid})`;
+      document.getElementById('adminInput').disabled = false;
+      document.getElementById('sendBtn').disabled = false;
+      if(unsubscribeMsg) unsubscribeMsg();
+      const box = document.getElementById('messagesBox');
+      unsubscribeMsg = db.collection('chats').doc(uid).collection('messages')
+        .orderBy('timestamp')
+        .onSnapshot(snap => {
+          box.innerHTML = '';
+          if(snap.empty) {
+            box.innerHTML = '<div class="empty-state"><p>เริ่มการสนทนาได้เลย</p></div>';
+            return;
+          }
+          snap.forEach(doc => {
+            const msg = doc.data();
+            const div = document.createElement('div');
+            div.className = `msg ${msg.sender === 'admin' ? 'msg-admin' : 'msg-user'}`;
+            div.innerText = msg.text;
+            box.appendChild(div);
+          });
+          box.scrollTop = box.scrollHeight;
+        });
+    }
+
+    function sendReply() {
+      const inp = document.getElementById('adminInput');
+      const txt = inp.value.trim();
+      if(!txt || !currentChatId) return;
+      db.collection('chats').doc(currentChatId).collection('messages').add({
+        text: txt, sender: 'admin', timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      db.collection('chats').doc(currentChatId).set({
+        lastMessage: 'Admin: ' + txt,
+        lastActive: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      inp.value = '';
+    }
+
+    function handleEnter(e) { if(e.key === 'Enter') sendReply(); }
+  </script>
+</body>
+</html>
