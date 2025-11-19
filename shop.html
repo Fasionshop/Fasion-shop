@@ -140,7 +140,7 @@
     <div class="icon-btn" onclick="openCart()" title="ตะกร้าสินค้า"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cartCount">0</span></div>
     
     <div id="authContainer">
-       <div id="loginBtn" onclick="window.location.href='index.html'" style="margin-left:5px; color:white; font-size:1rem; cursor:pointer; white-space: nowrap; display:none;">
+       <div id="loginBtn" onclick="window.location.href='login.html'" style="margin-left:5px; color:white; font-size:1rem; cursor:pointer; white-space: nowrap; display:none;">
          <i class="fas fa-user-circle"></i> Login
        </div>
        
@@ -431,7 +431,7 @@
       btnConfirm.onclick = () => {
         auth.signOut().then(() => {
           localStorage.removeItem('shop_userId');
-          window.location.href = 'login.html';
+          window.location.href = 'index.html';
         });
       };
       document.getElementById('confirmModal').style.display = 'flex';
