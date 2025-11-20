@@ -5,34 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Fasion - Shop</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
-    /* --- Global Styles --- */
-    :root { --primary: #ee4d2d; --bg: #f5f5f5; --white: #ffffff; --text: #333; }
-    body { font-family: 'Sarabun', sans-serif; background-color: var(--bg); margin: 0; padding-bottom: 70px; font-size: 16px; }
-    
-    /* Header */
-    header { background: linear-gradient(-180deg, #f53d2d, #f63); padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    /* --- (CSS ทั้งหมดเหมือนเดิม) --- */
+    :root { --primary: #7A56D3; --bg: #f5f5f5; --white: #ffffff; --text: #333; } /* 👈 เปลี่ยนสีหลัก */
+    body { 
+      font-family: 'Mitr', sans-serif; background-color: var(--bg); 
+      margin: 0; padding-bottom: 70px; font-size: 16px; 
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    header { background: linear-gradient(-180deg, #7A56D3, #5E42A6); padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); } /* 👈 เปลี่ยนสีไล่ระดับ */
     .search-bar { flex-grow: 1; background: white; padding: 8px 15px; border-radius: 5px; display: flex; align-items: center; }
-    .search-bar input { border: none; outline: none; width: 100%; margin-left: 10px; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
+    .search-bar input { border: none; outline: none; width: 100%; margin-left: 10px; font-family: 'Mitr', sans-serif; font-size: 1rem; }
     .icon-btn { color: white; font-size: 1.4rem; position: relative; cursor: pointer; display: flex; align-items: center; }
-    .cart-badge { position: absolute; top: -8px; right: -8px; background: #ffe13c; color: #ee4d2d; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid #ee4d2d; }
-    
-    /* 🔥 Profile Menu (Header) 🔥 */
+    .cart-badge { position: absolute; top: -8px; right: -8px; background: #ffe13c; color: var(--primary); font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid var(--primary); } /* 👈 เปลี่ยนสี */
     .profile-menu { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: 5px; color: white; }
     .header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; background: #eee; }
     .header-name { font-size: 0.9rem; font-weight: 600; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    /* Category */
     .category-bar { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 15px; position: sticky; top: 60px; z-index: 90; }
     .cat-item { white-space: nowrap; padding: 5px 15px; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; color: #666; transition: 0.3s; }
-    .cat-item.active { border-color: var(--primary); color: var(--primary); background-color: #fff5f1; font-weight: 600; }
-    
-    /* Product Grid */
+    .cat-item.active { border-color: var(--primary); color: var(--primary); background-color: #F3F0FF; font-weight: 600; } /* 👈 เปลี่ยนสีพื้นหลัง */
     .product-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
     @media (max-width: 768px) { .product-container { grid-template-columns: repeat(2, 1fr); } }
-
     .product-card { background: white; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: transform 0.2s; display: flex; flex-direction: column; animation: fadeIn 0.5s; position: relative; }
     .product-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
     .p-img { width: 100%; aspect-ratio: 1 / 1; background-color: #ddd; object-fit: cover; }
@@ -40,32 +38,24 @@
     .p-name { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 5px; }
     .p-price { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
     .p-stock { font-size: 0.75rem; color: #888; margin-top: 5px; }
-    .p-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 3px; cursor: pointer; font-family: 'Sarabun'; }
+    .p-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 8px; margin-top: 10px; border-radius: 3px; cursor: pointer; font-family: 'Mitr'; }
     .p-btn:disabled { background: #ccc; }
-    
-    /* Fav Button */
     .fav-btn { position: absolute; top: 8px; right: 8px; width: 35px; height: 35px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #ccc; font-size: 1.2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; border: none; z-index: 2; }
     .fav-btn:hover { transform: scale(1.1); }
-    .fav-btn.active { color: #ff424f; }
-
-    /* Modal Styles */
+    .fav-btn.active { color: #ff424f; } /* (สีแดงของ 'ชอบ' คงเดิม) */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-end; }
     .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    
-    /* Confirm Modal */
     .confirm-modal-box { background: white; padding: 25px; border-radius: 10px; text-align: center; width: 90%; max-width: 350px; animation: popIn 0.3s; }
     @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .confirm-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
     .confirm-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #333; }
     .confirm-desc { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
     .confirm-actions { display: flex; gap: 10px; justify-content: center; }
-    .btn-confirm-action { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-family: 'Sarabun'; font-weight: 600; }
-    .btn-yes { background: #ee4d2d; color: white; }
+    .btn-confirm-action { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-family: 'Mitr'; font-weight: 600; }
+    .btn-yes { background: var(--primary); color: white; } /* 👈 เปลี่ยนสี */
     .btn-no { background: #eee; color: #333; }
     .btn-ok { background: #4CAF50; color: white; width: 100%; }
-
-    /* Cart Item */
     .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
     .cart-item-info { flex-grow: 1; }
     .cart-item-controls { display: flex; align-items: center; gap: 10px; }
@@ -73,58 +63,49 @@
     .mini-qty-btn { width: 25px; height: 25px; border: none; background: #f8f8f8; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; }
     .mini-qty-btn:hover { background: #eee; }
     .mini-qty-val { width: 30px; text-align: center; font-size: 1rem; font-weight: 600; }
-
     .close-btn { float: right; font-size: 1.5rem; cursor: pointer; }
-    .checkout-btn { background: var(--primary); color: white; width: 100%; padding: 15px; border: none; font-size: 1.2rem; margin-top: 15px; border-radius: 5px; font-family: 'Sarabun', sans-serif; font-weight: 600; }
-    
-    /* History */
+    .checkout-btn { background: var(--primary); color: white; width: 100%; padding: 15px; border: none; font-size: 1.2rem; margin-top: 15px; border-radius: 5px; font-family: 'Mitr', sans-serif; font-weight: 600; }
     .order-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff; }
     .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.95rem; color: #555; }
     .order-status { font-weight: 600; color: var(--primary); }
     .order-items { font-size: 0.95rem; color: #333; }
     .order-total { text-align: right; font-weight: 600; font-size: 1.2rem; color: var(--primary); margin-top: 10px; }
     .item-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-
-    /* Chat & Toast */
-    .chat-btn { position: fixed; bottom: 80px; right: 20px; background: #ee4d2d; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 1000; font-size: 24px; }
-    .chat-window { display: none; position: fixed; bottom: 150px; right: 20px; width: 300px; height: 400px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; flex-direction: column; z-index: 1000; overflow: hidden; font-family: 'Sarabun'; }
-    .chat-header { background: #ee4d2d; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .chat-btn { position: fixed; bottom: 80px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: grab; z-index: 1000; font-size: 24px; } /* 👈 เปลี่ยนสี */
+    .chat-window { display: none; position: fixed; bottom: 150px; right: 20px; width: 300px; height: 400px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; flex-direction: column; z-index: 1000; overflow: hidden; font-family: 'Mitr'; }
+    .chat-header { background: var(--primary); color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: grab; } /* 👈 เปลี่ยนสี */
     .chat-body { flex: 1; padding: 10px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
     .chat-input-area { padding: 10px; border-top: 1px solid #ddd; display: flex; }
-    .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Sarabun'; }
-    .chat-input-area button { background: #ee4d2d; color: white; border: none; padding: 8px 15px; margin-left: 5px; border-radius: 20px; cursor: pointer; font-family: 'Sarabun'; }
+    .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Mitr'; }
+    .chat-input-area button { background: var(--primary); color: white; border: none; padding: 8px 15px; margin-left: 5px; border-radius: 20px; cursor: pointer; font-family: 'Mitr'; } /* 👈 เปลี่ยนสี */
     .msg { padding: 8px 12px; border-radius: 15px; max-width: 80%; font-size: 1rem; }
-    .msg-user { background: #ee4d2d; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; } /* 👈 เปลี่ยนสี */
     .msg-admin { background: #e0e0e0; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
     #toast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.8); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 1rem; opacity: 0; transition: opacity 0.3s, visibility 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
     #toast.show { visibility: visible; opacity: 1; }
     #toast.error { background-color: rgba(220, 53, 69, 0.9); }
-
-    /* Forms & Qty */
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color:#555; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: 'Mitr', sans-serif; font-size: 1rem; }
     .payment-options label { display: block; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 5px; cursor: pointer; display:flex; align-items:center; gap:10px; }
     .payment-options input:checked + span { color: var(--primary); font-weight: 600; }
     #bankDetails { display: none; background: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #eee; margin-top: 10px; animation: fadeIn 0.3s; }
-    .bank-select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd; font-family: 'Sarabun'; }
+    .bank-select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd; font-family: 'Mitr'; }
     #qrCodeContainer { text-align: center; margin-top: 10px; display: none; }
     #qrCodeContainer img { width: 200px; border: 1px solid #ddd; border-radius: 10px; }
     .bank-info { font-size: 1rem; color: #555; text-align: center; margin-top: 5px; }
     .qty-selector { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
     .qty-btn { width: 40px; height: 40px; border: 1px solid #ddd; background: white; font-size: 1.2rem; cursor: pointer; color: #555; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
-    .qty-display { width: 60px; text-align: center; font-size: 1.2rem; font-weight: 600; border: none; font-family: 'Sarabun'; }
+    .qty-display { width: 60px; text-align: center; font-size: 1.2rem; font-weight: 600; border: none; font-family: 'Mitr'; }
     .modal-product-img { width: 100px; height: 100px; object-fit: cover; border-radius: 5px; margin-right: 15px; }
     .modal-product-info { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
     .fav-item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .empty-fav { grid-column: span 2; text-align: center; color: #999; padding: 20px; }
-
-    /* 🔥🔥🔥 Profile Modal Styles (เพิ่มใหม่) 🔥🔥🔥 */
     .profile-header-edit { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
     .profile-img-large { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 10px; }
-    .upload-label { cursor: pointer; color: var(--primary); font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #fff5f1; padding: 5px 15px; border-radius: 20px; transition: 0.2s; }
-    .upload-label:hover { background: #ffeae3; }
-    .logout-btn { width: 100%; background: #eee; color: #333; margin-top: 10px; font-family: 'Sarabun'; font-weight:600; }
+    .upload-label { cursor: pointer; color: var(--primary); font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #F3F0FF; padding: 5px 15px; border-radius: 20px; transition: 0.2s; } /* 👈 เปลี่ยนสี */
+    .upload-label:hover { background: #E9E4FF; } /* 👈 เปลี่ยนสี */
+    .logout-btn { width: 100%; background: #eee; color: #333; margin-top: 10px; font-family: 'Mitr'; font-weight:600; }
   </style>
 </head>
 <body>
@@ -134,16 +115,13 @@
       <i class="fas fa-search" style="color: #666;"></i>
       <input type="text" id="searchInput" placeholder="ค้นหาสินค้า..." onkeyup="filterProducts()">
     </div>
-    
     <div class="icon-btn" onclick="openFav()" title="รายการที่ชอบ"><i class="fas fa-heart"></i></div>
     <div class="icon-btn" onclick="openHistory()" title="ประวัติการสั่งซื้อ"><i class="fas fa-history"></i></div>
     <div class="icon-btn" onclick="openCart()" title="ตะกร้าสินค้า"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cartCount">0</span></div>
-    
     <div id="authContainer">
        <div id="loginBtn" onclick="window.location.href='index.html'" style="margin-left:5px; color:white; font-size:1rem; cursor:pointer; white-space: nowrap; display:none;">
          <i class="fas fa-user-circle"></i> Login
        </div>
-       
        <div id="userProfileBtn" class="profile-menu" onclick="openProfileModal()" style="display:none;">
          <img src="https://via.placeholder.com/50" class="header-avatar" id="headerAvatar">
          <span class="header-name" id="headerName">User</span>
@@ -212,26 +190,44 @@
       <span class="close-btn" onclick="closeModal('cartModal')">&times;</span>
       <h2>🛒 ตระกร้าสินค้า</h2>
       <div id="cartItemsContainer"><p>ยังไม่มีสินค้าในตระกร้า</p></div>
-      <div style="margin-top: 20px; border-top: 2px dashed #ddd; padding-top:10px;">
-        <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:600;"><span>ยอดรวมทั้งหมด</span><span id="totalPrice" style="color:var(--primary)">฿0</span></div>
+      
+      <div class="coupon-box" style="margin-top: 15px; display:flex; gap:10px;">
+        <input type="text" id="couponInput" class="form-control" placeholder="กรอกโค้ดส่วนลด" style="margin:0; font-family:'Mitr';">
+        <button id="couponBtn" onclick="applyCoupon()" style="width:auto; padding: 0 20px; font-size: 1rem; margin:0; font-family:'Mitr';">ใช้โค้ด</button>
       </div>
+
+      <div style="margin-top: 20px; border-top: 2px dashed #ddd; padding-top:10px; font-size:1rem; display:flex; flex-direction:column; gap: 5px;">
+        <div style="display:flex; justify-content:space-between;">
+          <span>ยอดรวม (Subtotal)</span>
+          <span id="subTotalPrice">฿0</span>
+        </div>
+        
+        <div id="discountDisplay" style="display:flex; justify-content:space-between; color:green; display:none;">
+          <span>ส่วนลด (<span id="couponCodeDisplay"></span>)</span>
+          <span id="discountAmount"></span>
+        </div>
+        
+        <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:600; margin-top:5px;">
+          <span>ยอดรวมทั้งหมด</span>
+          <span id="totalPrice" style="color:var(--primary)">฿0</span>
+        </div>
+      </div>
+      
       <button class="checkout-btn" onclick="openPayment()">ดำเนินการชำระเงิน</button>
     </div>
   </div>
-
+  
   <div id="paymentModal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('paymentModal')">&times;</span>
       <h2>📦 ข้อมูลจัดส่งและการชำระเงิน</h2>
       <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd;">
-        <h3 style="font-size:1.1rem; color:#ee4d2d;">1. ที่อยู่จัดส่ง</h3>
-        <div class="form-group"><input type="text" id="custName" class="form-control" placeholder="ชื่อ-นามสกุล ผู้รับ"></div>
+        <h3 style="font-size:1.1rem; color:var(--primary);">1. ที่อยู่จัดส่ง</h3> <div class="form-group"><input type="text" id="custName" class="form-control" placeholder="ชื่อ-นามสกุล ผู้รับ"></div>
         <div class="form-group"><input type="tel" id="custPhone" class="form-control" placeholder="เบอร์โทรศัพท์"></div>
         <div class="form-group"><textarea id="custAddress" class="form-control" rows="3" placeholder="ที่อยู่จัดส่ง..."></textarea></div>
       </div>
       <div>
-        <h3 style="font-size:1.1rem; color:#ee4d2d;">2. วิธีชำระเงิน</h3>
-        <div class="payment-options">
+        <h3 style="font-size:1.1rem; color:var(--primary);">2. วิธีชำระเงิน</h3> <div class="payment-options">
           <label onclick="toggleBank(false)"><input type="radio" name="payment" value="cod" checked> <span><i class="fas fa-truck"></i> เก็บเงินปลายทาง (COD)</span></label>
           <label onclick="toggleBank(true)"><input type="radio" name="payment" value="bank"> <span><i class="fas fa-university"></i> โอนผ่านธนาคาร / QR</span></label>
           <div id="bankDetails">
@@ -293,7 +289,7 @@
     </div>
   </div>
 
-  <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comments"></i></div>
+  <div class="chat-btn" id="chatBtn"><i class="fas fa-comments"></i></div>
   <div class="chat-window" id="chatWindow">
     <div class="chat-header"><span>💬 สอบถามร้านค้า</span><span style="cursor:pointer" onclick="toggleChat()">&times;</span></div>
     <div class="chat-body" id="chatBody"><div class="msg msg-admin">สวัสดีครับ! มีอะไรให้ช่วยไหมครับ?</div></div>
@@ -308,6 +304,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
   <script>
+    // --- (JavaScript ทั้งหมดคงเดิม) ---
     const firebaseConfig = {
       apiKey: "AIzaSyA7lELq82KxJ0sFDf6jKmWPDFKpKqHJp0c",
       authDomain: "king007-c72e2.firebaseapp.com",
@@ -321,8 +318,23 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
+    // --- ⛔ ป้องกันการคัดลอก (เหมือนเดิม) ⛔ ---
+    document.addEventListener('contextmenu', (e) => { e.preventDefault(); });
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+      showToast('ไม่อนุญาตให้คัดลอกเนื้อหา', true); 
+    });
+    // --- ⛔ --------------------------- ⛔ ---
+
     let allProducts=[], cart=[], userFavorites=[];
-    let totalAmount=0, currentSelectedId=null, currentQty=1;
+    let currentSelectedId=null, currentQty=1;
+    
+    // 🔥 2. JS: เปลี่ยนตัวแปรราคา เป็นแบบแยกส่วน 🔥
+    let subtotalAmount = 0;
+    let discountApplied = 0;
+    let finalTotalAmount = 0;
+    let currentDiscount = { code: null, type: null, value: 0 }; // ตัวแปรเก็บส่วนลดที่ใช้
+    
     let userId = localStorage.getItem('shop_userId');
     if (!userId) { userId = 'guest_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('shop_userId', userId); }
 
@@ -335,28 +347,75 @@
           
           listenToChat();
           loadFavorites();
-          await loadUserProfile(user); // 🔥 โหลดข้อมูลโปรไฟล์จาก DB
+          await loadUserProfile(user); 
         } else {
           document.getElementById('loginBtn').style.display = 'block';
           document.getElementById('userProfileBtn').style.display = 'none';
           listenToChat();
         }
       });
-      await checkAndSeedData();
+      await checkAndSeedData(); // (ใช้ฟังก์ชันสร้างสินค้าตัวอย่างจากไฟล์เดิม)
       loadProductsFromDB();
+      
+      // --- ระบบลากแชท (เหมือนเดิม) ---
+      const chatWindow = document.getElementById('chatWindow');
+      const chatHeader = chatWindow.querySelector('.chat-header');
+      const chatButton = document.getElementById('chatBtn');
+      makeDraggable(chatWindow, chatHeader, null);
+      makeDraggable(chatButton, chatButton, toggleChat);
+      // ---------------------------------
     };
-
-    // 🔥🔥🔥 ฟังก์ชันเกี่ยวกับ Profile 🔥🔥🔥
     
-    let currentUserData = {};
+    // --- ฟังก์ชันลากแชท (เหมือนเดิม) ---
+    function makeDraggable(element, handle, onClickCallback) {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      let dragged = false; 
+      handle.onmousedown = dragMouseDown;
 
+      function dragMouseDown(e) {
+        e = e || window.event; e.preventDefault(); 
+        dragged = false; pos3 = e.clientX; pos4 = e.clientY;
+        if (element.style.top === "" || element.style.left === "") {
+          const rect = element.getBoundingClientRect();
+          element.style.top = rect.top + 'px';
+          element.style.left = rect.left + 'px';
+          element.style.bottom = 'auto'; element.style.right = 'auto';
+        }
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+        handle.style.cursor = 'grabbing'; 
+      }
+
+      function elementDrag(e) {
+        e = e || window.event; e.preventDefault();
+        dragged = true; 
+        pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+        pos3 = e.clientX; pos4 = e.clientY;
+        let newTop = element.offsetTop - pos2;
+        let newLeft = element.offsetLeft - pos1;
+        if (newTop < 0) newTop = 0;
+        if (newLeft < 0) newLeft = 0;
+        if (newTop + element.clientHeight > window.innerHeight) newTop = window.innerHeight - element.clientHeight;
+        if (newLeft + element.clientWidth > window.innerWidth) newLeft = window.innerWidth - element.clientWidth;
+        element.style.top = newTop + "px";
+        element.style.left = newLeft + "px";
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null; document.onmousemove = null;
+        handle.style.cursor = 'grab'; 
+        if (!dragged && onClickCallback) { onClickCallback(); }
+      }
+    }
+    // --- (จบฟังก์ชันลาก) ---
+
+
+    // --- ฟังก์ชันโปรไฟล์ (เหมือนเดิม) ---
+    let currentUserData = {};
     async function loadUserProfile(user) {
-      // ดึงข้อมูล user จาก Firestore (ถ้ามี)
       const doc = await db.collection('users').doc(user.uid).get();
-      if (doc.exists) {
-        currentUserData = doc.data();
-      } else {
-        // ถ้าไม่มี ให้ใช้ข้อมูลพื้นฐานจาก Auth
+      if (doc.exists) { currentUserData = doc.data(); } 
+      else {
         currentUserData = {
           displayName: user.displayName || user.email.split('@')[0],
           photoURL: user.photoURL || 'https://via.placeholder.com/150?text=User',
@@ -365,63 +424,38 @@
       }
       updateProfileUI();
     }
-
     function updateProfileUI() {
       document.getElementById('headerName').innerText = currentUserData.displayName;
       document.getElementById('headerAvatar').src = currentUserData.photoURL;
-      
-      // อัปเดตใน Modal ด้วย
       document.getElementById('editName').value = currentUserData.displayName;
       document.getElementById('editEmail').value = currentUserData.email;
       document.getElementById('editAvatarPreview').src = currentUserData.photoURL;
-      
-      // อัปเดตชื่อในฟอร์มส่งของด้วย
       document.getElementById('custName').value = currentUserData.displayName;
     }
-
-    function openProfileModal() {
-      document.getElementById('profileModal').style.display = 'flex';
-    }
-
-    // แปลงไฟล์เป็น Base64
+    function openProfileModal() { document.getElementById('profileModal').style.display = 'flex'; }
     function previewImage(event) {
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('editAvatarPreview').src = e.target.result;
-        };
+        reader.onload = function(e) { document.getElementById('editAvatarPreview').src = e.target.result; };
         reader.readAsDataURL(file);
       }
     }
-
     async function saveProfile() {
       const newName = document.getElementById('editName').value.trim();
       const newImgSrc = document.getElementById('editAvatarPreview').src;
-      
       if(!newName) return showToast('กรุณากรอกชื่อ', true);
-      
       try {
-        // บันทึกลง Firestore
         await db.collection('users').doc(userId).set({
-          displayName: newName,
-          photoURL: newImgSrc,
-          email: currentUserData.email
+          displayName: newName, photoURL: newImgSrc, email: currentUserData.email
         }, { merge: true });
-        
-        // อัปเดตตัวแปร Global
         currentUserData.displayName = newName;
         currentUserData.photoURL = newImgSrc;
         updateProfileUI();
-        
         showToast('บันทึกข้อมูลเรียบร้อย');
         closeModal('profileModal');
-      } catch(e) {
-        console.error(e);
-        showToast('บันทึกไม่สำเร็จ', true);
-      }
+      } catch(e) { console.error(e); showToast('บันทึกไม่สำเร็จ', true); }
     }
-    
     function openLogoutConfirm() {
       document.getElementById('confirmIcon').innerHTML = '🚪';
       document.getElementById('confirmTitle').innerText = 'ออกจากระบบ?';
@@ -436,31 +470,29 @@
       };
       document.getElementById('confirmModal').style.display = 'flex';
     }
+    // --- (จบฟังก์ชันโปรไฟล์) ---
 
-    // --- (ฟังก์ชันเดิมทั้งหมด) ---
-  async function checkAndSeedData() {
+
+    // --- ฟังก์ชันสร้างสินค้า (เหมือนเดิม) ---
+    async function checkAndSeedData() {
       const s = await db.collection('products').limit(1).get();
       if(s.empty) {
         console.log("ฐานข้อมูลว่าง กำลังเพิ่มสินค้าตัวอย่าง...");
         const b = db.batch();
-        
-        // 🔥 รายการหมวดหมู่ใหม่ที่ตรงกับ HTML
         const categories = ['เสื้อผ้าแฟชั่น', 'กางเกง', 'เสื้อฮู้ด', 'เครื่องประดับ']; 
-        
         categories.forEach(c => {
-          let keyword = 'item'; // คำค้นหาภาพเริ่มต้น
+          let keyword = 'item'; 
           if (c === 'เสื้อผ้าแฟชั่น') keyword = 'shirt';
           if (c === 'กางเกง') keyword = 'jeans';
           if (c === 'เสื้อฮู้ด') keyword = 'hoodie';
           if (c === 'เครื่องประดับ') keyword = 'jewelry';
-
           for(let i=1;i<=20;i++) {
             b.set(db.collection('products').doc(), {
               name: `${c} ${i}`, 
               price: Math.floor(Math.random()*500)+100, 
               stock: 20, 
               category: c, 
-              image: `https://source.unsplash.com/300x300/?${keyword}&sig=${i}`, // ใช้ keyword ที่กำหนด
+              image: `https://source.unsplash.com/300x300/?${keyword}&sig=${i}`, 
               sold: 0
             });
           }
@@ -469,8 +501,11 @@
         console.log("เพิ่มสินค้าตัวอย่าง 80 ชิ้นเรียบร้อย!");
       }
     }
-    function loadProductsFromDB() { db.collection('products').onSnapshot(s => { allProducts=[]; s.forEach(d=>allProducts.push({id:d.id,...d.data()})); renderProducts(allProducts); }); }
+    // --- (จบฟังก์ชันสร้างสินค้า) ---
     
+
+    // --- (ฟังก์ชันสินค้าอื่นๆ เหมือนเดิม) ---
+    function loadProductsFromDB() { db.collection('products').onSnapshot(s => { allProducts=[]; s.forEach(d=>allProducts.push({id:d.id,...d.data()})); renderProducts(allProducts); }); }
     function renderProducts(p) {
       const c = document.getElementById('productList'); c.innerHTML='';
       p.forEach(x => {
@@ -490,18 +525,15 @@
           </div>`;
       });
     }
-
     async function loadFavorites() {
        const doc = await db.collection('favorites').doc(userId).get();
        userFavorites = doc.exists ? (doc.data().ids || []) : [];
        renderProducts(allProducts);
     }
-
     async function toggleFav(id) {
        const idx = userFavorites.indexOf(id);
        if(idx > -1) { userFavorites.splice(idx, 1); showToast('ลบจากรายการที่ชอบ'); } 
        else { userFavorites.push(id); showToast('เพิ่มในรายการที่ชอบ'); }
-       
        const btns = document.querySelectorAll(`.fav-btn[onclick="toggleFav('${id}')"]`);
        btns.forEach(btn => {
          if(userFavorites.includes(id)) { btn.classList.add('active'); btn.innerHTML = '<i class="fas fa-heart"></i>'; } 
@@ -509,7 +541,6 @@
        });
        await db.collection('favorites').doc(userId).set({ ids: userFavorites });
     }
-
     function openFav() {
       document.getElementById('favModal').style.display = 'flex';
       const con = document.getElementById('favContainer');
@@ -520,10 +551,8 @@
         con.innerHTML += `<div class="product-card"><button class="fav-btn active" onclick="toggleFav('${x.id}'); openFav();"><i class="fas fa-heart"></i></button><img src="${x.image}" class="p-img"><div class="p-details"><div class="p-name">${x.name}</div><div class="p-price">฿${x.price}</div><button class="p-btn" onclick="openQtyModal('${x.id}'); closeModal('favModal');">ใส่ตะกร้า</button></div></div>`;
       });
     }
-    
     function filterCategory(c,el) { document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active')); el.classList.add('active'); renderProducts(c==='ทั้งหมด'?allProducts:allProducts.filter(x=>x.category===c)); }
     function filterProducts() { const t=document.getElementById('searchInput').value.toLowerCase(); renderProducts(allProducts.filter(x=>x.name.toLowerCase().includes(t))); }
-    
     function openQtyModal(id) {
       const p = allProducts.find(x=>x.id===id);
       if(!p || p.stock<=0) return;
@@ -539,6 +568,8 @@
       const p = allProducts.find(x=>x.id===currentSelectedId);
       if(currentQty+n >=1 && currentQty+n <= p.stock) { currentQty+=n; document.getElementById('qtyDisplay').value=currentQty; }
     }
+    
+    // --- (ฟังก์ชันตะกร้า เหมือนเดิม) ---
     function submitToCart() {
       const p = allProducts.find(x=>x.id===currentSelectedId);
       const ex = cart.find(x=>x.id===currentSelectedId);
@@ -548,7 +579,6 @@
       } else cart.push({...p, qty:currentQty});
       updateCart(); showToast('เพิ่มลงตะกร้าแล้ว'); closeModal('qtyModal');
     }
-
     function adjustCartQty(idx, change) {
       const item = cart[idx];
       const product = allProducts.find(p => p.id === item.id);
@@ -559,14 +589,56 @@
       cart[idx].qty = newQty;
       openCart(); updateCart();
     }
-
     function updateCart() { document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0); }
-    
+
+
+    // 🔥 3. JS: เพิ่มฟังก์ชันสำหรับใช้โค้ดส่วนลด 🔥
+    async function applyCoupon() {
+      const codeInput = document.getElementById('couponInput');
+      const code = codeInput.value.trim().toUpperCase(); // ใช้ .toUpperCase() เพื่อให้พิมพ์เล็ก-ใหญ่ได้
+      if (!code) return showToast('กรุณากรอกโค้ด', true);
+
+      const btn = document.getElementById('couponBtn');
+      btn.disabled = true;
+      btn.innerText = 'รอ...';
+
+      try {
+        // (เราจะใช้ข้อมูลโค้ดแบบ Hardcode ในนี้ก่อน)
+        // คุณต้องไปสร้าง Collection 'coupons' ใน Firestore เอง
+        const couponRef = db.collection('coupons').doc(code);
+        const couponDoc = await couponRef.get();
+
+        if (!couponDoc.exists) {
+          showToast('โค้ดส่วนลดไม่ถูกต้อง', true);
+          currentDiscount = { code: null, type: null, value: 0 }; // รีเซ็ต
+        } else {
+          const couponData = couponDoc.data();
+          
+          // (คุณสามารถเพิ่มเงื่อนไขอื่นๆ ได้ที่นี่ เช่น วันหมดอายุ, จำนวนครั้งที่ใช้)
+          
+          showToast('ใช้โค้ดส่วนลดสำเร็จ!');
+          currentDiscount = { code: code, ...couponData }; // บันทึกส่วนลด
+        }
+      } catch (e) {
+        console.error("Error applying coupon:", e);
+        showToast('เกิดข้อผิดพลาด', true);
+        currentDiscount = { code: null, type: null, value: 0 };
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'ใช้โค้ด';
+        openCart(); // 🔥 เรียก openCart() เพื่อคำนวณราคาใหม่
+      }
+    }
+
+
+    // 🔥 4. JS: แก้ไข openCart() เพื่อคำนวณส่วนลด 🔥
     function openCart() {
-      const c = document.getElementById('cartItemsContainer'); c.innerHTML = cart.length?'':'<p>ว่างเปล่า</p>';
-      totalAmount=0;
+      const c = document.getElementById('cartItemsContainer'); 
+      c.innerHTML = cart.length ? '' : '<p>ว่างเปล่า</p>';
+      
+      subtotalAmount = 0; // รีเซ็ตยอดรวมย่อย
       cart.forEach((x,i) => { 
-        totalAmount+=x.price*x.qty; 
+        subtotalAmount += (x.price * x.qty); // คำนวณยอดรวมย่อย
         c.innerHTML+=`
           <div class="cart-item">
             <div class="cart-item-info">
@@ -584,10 +656,45 @@
             </div>
           </div>`; 
       });
-      document.getElementById('totalPrice').innerText='฿'+totalAmount;
+
+      // --- คำนวณส่วนลด ---
+      discountApplied = 0; // รีเซ็ตส่วนลด
+      const discountDisplay = document.getElementById('discountDisplay');
+
+      if (currentDiscount.code && subtotalAmount > 0) {
+        if (currentDiscount.type === 'percent') {
+          // ส่วนลดแบบ %
+          discountApplied = (subtotalAmount * currentDiscount.value) / 100;
+        } else if (currentDiscount.type === 'fixed') {
+          // ส่วนลดแบบคงที่
+          discountApplied = currentDiscount.value;
+        }
+
+        // ตรวจสอบว่าส่วนลดไม่เกินยอดรวม
+        if (discountApplied > subtotalAmount) {
+          discountApplied = subtotalAmount;
+        }
+        
+        finalTotalAmount = subtotalAmount - discountApplied; // ยอดสุทธิ
+
+        // อัปเดต UI ส่วนลด
+        document.getElementById('couponCodeDisplay').innerText = currentDiscount.code;
+        document.getElementById('discountAmount').innerText = `-฿${discountApplied.toFixed(0)}`; // .toFixed(0) เพื่อไม่เอาทศนิยม
+        discountDisplay.style.display = 'flex';
+      } else {
+        finalTotalAmount = subtotalAmount; // ไม่มีส่วนลด
+        discountDisplay.style.display = 'none'; // ซ่อน UI ส่วนลด
+      }
+
+      // อัปเดต UI ราคารวม
+      document.getElementById('subTotalPrice').innerText = '฿' + subtotalAmount;
+      document.getElementById('totalPrice').innerText = '฿' + finalTotalAmount;
+      
       document.getElementById('cartModal').style.display='flex';
     }
+
     
+    // --- (ฟังก์ชันชำระเงิน เหมือนเดิม) ---
     function openPayment() { 
       if(!cart.length) return showToast('ไม่มีสินค้าในตะกร้า', true);
       document.getElementById('cartModal').style.display='none'; 
@@ -597,9 +704,11 @@
     function showQR() {
       const b=document.getElementById('bankSelect').value;
       document.getElementById('qrCodeContainer').style.display=b?'block':'none';
-      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0970482500/${totalAmount}`;
+      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0970482500/${finalTotalAmount}`; // 🔥 เปลี่ยนเป็น finalTotalAmount
     }
     
+
+    // 🔥 5. JS: แก้ไข confirmOrder() เพื่อบันทึกส่วนลด 🔥
     async function confirmOrder() {
       const n=document.getElementById('custName').value, p=document.getElementById('custPhone').value, a=document.getElementById('custAddress').value;
       const pm=document.querySelector('input[name="payment"]:checked').value;
@@ -616,13 +725,41 @@
           if(!d.exists) throw "Err";
           t.update(db.collection('products').doc(i.id), {stock:d.data().stock-i.qty, sold:(d.data().sold||0)+i.qty});
         })));
-        await db.collection('orders').add({customer:{name:n,phone:p,address:a}, items:cart, total:totalAmount, paymentMethod:pm, bank:pm==='bank'?bankName:'-', user:userId, status:'pending', timestamp:firebase.firestore.FieldValue.serverTimestamp()});
-        sendMsgInternal(`[ระบบ] สั่งซื้อสำเร็จ ยอด ฿${totalAmount}`);
-        cart=[]; updateCart(); closeModal('paymentModal');
+        
+        // 🔥 บันทึกข้อมูลส่วนลดลงใน Order
+        await db.collection('orders').add({
+          customer:{name:n,phone:p,address:a}, 
+          items:cart, 
+          subtotal: subtotalAmount, // ยอดก่อนลด
+          discount: discountApplied, // ยอดส่วนลด
+          coupon: currentDiscount.code || '-', // รหัสคูปอง
+          total: finalTotalAmount, // ยอดสุทธิ
+          paymentMethod:pm, 
+          bank:pm==='bank'?bankName:'-', 
+          user:userId, 
+          status:'pending', 
+          timestamp:firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        sendMsgInternal(`[ระบบ] สั่งซื้อสำเร็จ ยอด ฿${finalTotalAmount}`); // แจ้งเตือนด้วยยอดสุทธิ
+        
+        cart=[]; // ล้างตะกร้า
+        currentDiscount = { code: null, type: null, value: 0 }; // 🔥 รีเซ็ตคูปองหลังสั่งซื้อ
+        document.getElementById('couponInput').value = ''; // เคลียร์ช่อง
+        
+        updateCart(); // อัปเดตป้ายแดง
+        closeModal('paymentModal');
         document.getElementById('successModal').style.display = 'flex';
-      } catch(e){ showToast('เกิดข้อผิดพลาด', true); } finally { btn.disabled=false; btn.innerText="ยืนยันการสั่งซื้อ"; }
+      } catch(e){ 
+        console.error("Order failed: ", e);
+        showToast('เกิดข้อผิดพลาด', true); 
+      } finally { 
+        btn.disabled=false; btn.innerText="ยืนยันการสั่งซื้อ"; 
+      }
     }
 
+    
+    // --- (ฟังก์ชันที่เหลือ เหมือนเดิม) ---
     async function openHistory() {
       document.getElementById('historyModal').style.display = 'flex';
       const con = document.getElementById('historyContainer');
@@ -634,10 +771,11 @@
       con.innerHTML = '';
       ords.forEach(o => {
         let items = ''; o.items.forEach(i => items += `<div class="item-row"><span>${i.name} x${i.qty}</span><span>฿${i.price*i.qty}</span></div>`);
-        con.innerHTML += `<div class="order-card"><div class="order-header"><span>📅 ${o.timestamp?new Date(o.timestamp.seconds*1000).toLocaleString('th-TH'):'-'}</span><span class="order-status" style="color:${o.status==='completed'?'green':'orange'}">${o.status==='completed'?'สำเร็จ':'รอจัดส่ง'}</span></div><div class="order-items">${items}</div><div class="order-total">รวม: ฿${o.total}</div></div>`;
+        // 🔥 แสดงยอดรวม (Total) ที่จ่ายจริงในประวัติ
+        // 👈 เปลี่ยนสี 'orange' เป็น 'var(--primary)'
+        con.innerHTML += `<div class="order-card"><div class="order-header"><span>📅 ${o.timestamp?new Date(o.timestamp.seconds*1000).toLocaleString('th-TH'):'-'}</span><span class="order-status" style="color:${o.status==='completed'?'green':'var(--primary)'}">${o.status==='completed'?'สำเร็จ':'รอจัดส่ง'}</span></div><div class="order-items">${items}</div><div class="order-total">รวม: ฿${o.total}</div></div>`;
       });
     }
-
     function toggleChat() { const w=document.getElementById('chatWindow'); w.style.display=w.style.display==='none'?'flex':'none'; if(w.style.display==='flex') scrollToBottom(); }
     function scrollToBottom() { const b=document.getElementById('chatBody'); b.scrollTop=b.scrollHeight; }
     function handleEnter(e) { if(e.key==='Enter') sendMsg(); }
@@ -668,7 +806,6 @@
       });
     }
     function closeModal(id){document.getElementById(id).style.display='none';}
-    
     function showToast(text, isError = false){
       const t=document.getElementById('toast');
       t.querySelector('span').innerText = text;

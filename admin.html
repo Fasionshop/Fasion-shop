@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Chat Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* 🔥 ใช้ฟอนต์ Sarabun 🔥 */
-    body { font-family: 'Sarabun', sans-serif; margin: 0; display: flex; height: 100vh; background: #f0f2f5; font-size: 16px; }
+    /* 🔥 ใช้ฟอนต์ Mitr 🔥 */
+    body { font-family: 'Mitr', sans-serif; margin: 0; display: flex; height: 100vh; background: #f0f2f5; font-size: 16px; }
     
     /* Sidebar */
     .sidebar { width: 320px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
-    .sidebar-header { padding: 20px; background: #ee4d2d; color: white; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; }
+    .sidebar-header { padding: 20px; background: #7A56D3; color: white; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; } /* 👈 เปลี่ยนสี */
     .user-list { flex: 1; overflow-y: auto; }
     
     .user-item { 
       padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; 
       display: flex; align-items: center; gap: 12px; transition: 0.2s; 
     }
-    .user-item:hover { background: #fff5f1; }
-    .user-item.active { background: #ffeae3; border-left: 5px solid #ee4d2d; }
+    .user-item:hover { background: #F3F0FF; } /* 👈 เปลี่ยนสี */
+    .user-item.active { background: #E9E4FF; border-left: 5px solid #7A56D3; } /* 👈 เปลี่ยนสี */
     
     .user-avatar { width: 45px; height: 45px; background: #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #888; font-size: 1.2rem; flex-shrink: 0; }
     .user-info { flex: 1; min-width: 0; }
@@ -35,15 +35,17 @@
     
     /* Input Area */
     .input-box { padding: 20px; border-top: 1px solid #ddd; display: flex; gap: 10px; background: #f0f0f0; }
-    .input-box input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; padding-left: 20px; font-family: 'Sarabun', sans-serif; font-size: 1rem; }
-    .input-box button { padding: 10px 25px; background: #ee4d2d; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: 'Sarabun', sans-serif; }
-    .input-box button:hover { background: #d73211; }
+    /* 🔥 เปลี่ยนฟอนต์เป็น Mitr 🔥 */
+    .input-box input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; padding-left: 20px; font-family: 'Mitr', sans-serif; font-size: 1rem; }
+    /* 🔥 เปลี่ยนฟอนต์เป็น Mitr 🔥 */
+    .input-box button { padding: 10px 25px; background: #7A56D3; color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: 'Mitr', sans-serif; } /* 👈 เปลี่ยนสี */
+    .input-box button:hover { background: #5E42A6; } /* 👈 เปลี่ยนสี */
     .input-box button:disabled { background: #ccc; cursor: not-allowed; }
 
     /* Message Bubbles */
     .msg { padding: 10px 15px; border-radius: 15px; max-width: 70%; word-wrap: break-word; line-height: 1.4; position: relative; animation: fadeIn 0.2s; font-size: 1rem; }
     @keyframes fadeIn { from{opacity:0; transform:translateY(5px);} to{opacity:1; transform:translateY(0);} }
-    .msg-admin { background: #ee4d2d; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .msg-admin { background: #7A56D3; color: white; align-self: flex-end; border-bottom-right-radius: 2px; } /* 👈 เปลี่ยนสี */
     .msg-user { background: #f1f1f1; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
     
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #ccc; }
@@ -83,6 +85,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
   <script>
+    // --- (JavaScript ทั้งหมดคงเดิม) ---
     const firebaseConfig = {
       apiKey: "AIzaSyA7lELq82KxJ0sFDf6jKmWPDFKpKqHJp0c",
       authDomain: "king007-c72e2.firebaseapp.com",
