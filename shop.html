@@ -363,7 +363,97 @@
       const chatButton = document.getElementById('chatBtn');
       makeDraggable(chatWindow, chatHeader, null);
       makeDraggable(chatButton, chatButton, toggleChat);
-      // ---------------------------------
+      //// --- ฟังก์ชันลากแชท (ฉบับแก้ไข) ---
+    function makeDraggable(element, handle, onClickCallback) {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      let dragged = false; 
+
+      // 1. เพิ่ม Event Listener ทั้งเมาส์และทัชสกรีน
+      handle.onmousedown = dragStart;
+      handle.ontouchstart = dragStart;
+
+      function dragStart(e) {
+        e = e || window.event;
+        dragged = false; 
+
+        // 2. ตรวจสอบว่าเป็นทัชสกรีนหรือเมาส์ เพื่อดึงค่าพิกัดเริ่มต้น
+        if (e.type === 'touchstart') {
+          pos3 = e.touches[0].clientX;
+          pos4 = e.touches[0].clientY;
+        } else {
+          e.preventDefault(); // ป้องกันการเลือกข้อความตอนคลิกเมาส์
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+        }
+        
+        // (โค้ดเดิมสำหรับกำหนดตำแหน่งเริ่มต้น)
+        if (element.style.top === "" || element.style.left === "") {
+          const rect = element.getBoundingClientRect();
+          element.style.top = rect.top + 'px';
+          element.style.left = rect.left + 'px';
+          element.style.bottom = 'auto'; element.style.right = 'auto';
+        }
+
+        // 3. เพิ่ม Listener ตอนจบ (up/end) และตอนลาก (move) ทั้งสองแบบ
+        document.onmouseup = dragEnd;
+        document.ontouchend = dragEnd;
+        document.onmousemove = elementDrag;
+        document.ontouchmove = elementDrag;
+        
+        handle.style.cursor = 'grabbing'; 
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        
+        // 4. ป้องกันหน้าจอเลื่อน (scroll) ขณะลากบนมือถือ
+        e.preventDefault(); 
+        
+        let clientX, clientY;
+        
+        // 5. ดึงค่า X, Y จากทัชสกรีนหรือเมาส์
+        if (e.type === 'touchmove') {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+
+        dragged = true; 
+        pos1 = pos3 - clientX;
+        pos2 = pos4 - clientY;
+        pos3 = clientX;
+        pos4 = clientY;
+        
+        // (โค้ดเดิมสำหรับคำนวณตำแหน่งใหม่และเช็คขอบเขต)
+        let newTop = element.offsetTop - pos2;
+        let newLeft = element.offsetLeft - pos1;
+        if (newTop < 0) newTop = 0;
+        if (newLeft < 0) newLeft = 0;
+        if (newTop + element.clientHeight > window.innerHeight) newTop = window.innerHeight - element.clientHeight;
+        if (newLeft + element.clientWidth > window.innerWidth) newLeft = window.innerWidth - element.clientWidth;
+        
+        element.style.top = newTop + "px";
+        element.style.left = newLeft + "px";
+      }
+
+      function dragEnd() {
+        // 6. ลบ Listener ทั้งหมดออก (ทั้งเมาส์และทัช)
+        document.onmouseup = null; 
+        document.ontouchend = null;
+        document.onmousemove = null; 
+        document.ontouchmove = null;
+
+        handle.style.cursor = 'grab'; 
+        
+        // (โค้ดเดิมสำหรับเช็คว่าเป็นการคลิกหรือลาก)
+        if (!dragged && onClickCallback) { 
+          onClickCallback(); 
+        }
+      }
+    }
+    // --- (จบฟังก์ชันลาก) ---
     };
     
     // --- ฟังก์ชันลากแชท (เหมือนเดิม) ---
