@@ -9,26 +9,23 @@
   
   <style>
     /* --- (CSS ทั้งหมดเหมือนเดิม) --- */
-    :root { --primary: #7A56D3; --bg: #f5f5f5; --white: #ffffff; --text: #333; } /* 👈 เปลี่ยนสีหลัก */
+    :root { --primary: #7A56D3; --bg: #f5f5f5; --white: #ffffff; --text: #333; }
     body { 
       font-family: 'Mitr', sans-serif; background-color: var(--bg); 
       margin: 0; padding-bottom: 70px; font-size: 16px; 
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
+      user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
     }
-    header { background: linear-gradient(-180deg, #7A56D3, #5E42A6); padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); } /* 👈 เปลี่ยนสีไล่ระดับ */
+    header { background: linear-gradient(-180deg, #7A56D3, #5E42A6); padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .search-bar { flex-grow: 1; background: white; padding: 8px 15px; border-radius: 5px; display: flex; align-items: center; }
     .search-bar input { border: none; outline: none; width: 100%; margin-left: 10px; font-family: 'Mitr', sans-serif; font-size: 1rem; }
     .icon-btn { color: white; font-size: 1.4rem; position: relative; cursor: pointer; display: flex; align-items: center; }
-    .cart-badge { position: absolute; top: -8px; right: -8px; background: #ffe13c; color: var(--primary); font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid var(--primary); } /* 👈 เปลี่ยนสี */
+    .cart-badge { position: absolute; top: -8px; right: -8px; background: #ffe13c; color: var(--primary); font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid var(--primary); }
     .profile-menu { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: 5px; color: white; }
     .header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; background: #eee; }
     .header-name { font-size: 0.9rem; font-weight: 600; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .category-bar { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 15px; position: sticky; top: 60px; z-index: 90; }
     .cat-item { white-space: nowrap; padding: 5px 15px; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; color: #666; transition: 0.3s; }
-    .cat-item.active { border-color: var(--primary); color: var(--primary); background-color: #F3F0FF; font-weight: 600; } /* 👈 เปลี่ยนสีพื้นหลัง */
+    .cat-item.active { border-color: var(--primary); color: var(--primary); background-color: #F3F0FF; font-weight: 600; }
     .product-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
     @media (max-width: 768px) { .product-container { grid-template-columns: repeat(2, 1fr); } }
     .product-card { background: white; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: transform 0.2s; display: flex; flex-direction: column; animation: fadeIn 0.5s; position: relative; }
@@ -42,7 +39,7 @@
     .p-btn:disabled { background: #ccc; }
     .fav-btn { position: absolute; top: 8px; right: 8px; width: 35px; height: 35px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #ccc; font-size: 1.2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; border: none; z-index: 2; }
     .fav-btn:hover { transform: scale(1.1); }
-    .fav-btn.active { color: #ff424f; } /* (สีแดงของ 'ชอบ' คงเดิม) */
+    .fav-btn.active { color: #ff424f; }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-end; }
     .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
@@ -53,7 +50,7 @@
     .confirm-desc { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
     .confirm-actions { display: flex; gap: 10px; justify-content: center; }
     .btn-confirm-action { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-family: 'Mitr'; font-weight: 600; }
-    .btn-yes { background: var(--primary); color: white; } /* 👈 เปลี่ยนสี */
+    .btn-yes { background: var(--primary); color: white; }
     .btn-no { background: #eee; color: #333; }
     .btn-ok { background: #4CAF50; color: white; width: 100%; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 15px 0; }
@@ -71,15 +68,15 @@
     .order-items { font-size: 0.95rem; color: #333; }
     .order-total { text-align: right; font-weight: 600; font-size: 1.2rem; color: var(--primary); margin-top: 10px; }
     .item-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .chat-btn { position: fixed; bottom: 80px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: grab; z-index: 1000; font-size: 24px; } /* 👈 เปลี่ยนสี */
+    .chat-btn { position: fixed; bottom: 80px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: grab; z-index: 1000; font-size: 24px; }
     .chat-window { display: none; position: fixed; bottom: 150px; right: 20px; width: 300px; height: 400px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; flex-direction: column; z-index: 1000; overflow: hidden; font-family: 'Mitr'; }
-    .chat-header { background: var(--primary); color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: grab; } /* 👈 เปลี่ยนสี */
+    .chat-header { background: var(--primary); color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: grab; }
     .chat-body { flex: 1; padding: 10px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
     .chat-input-area { padding: 10px; border-top: 1px solid #ddd; display: flex; }
     .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Mitr'; }
-    .chat-input-area button { background: var(--primary); color: white; border: none; padding: 8px 15px; margin-left: 5px; border-radius: 20px; cursor: pointer; font-family: 'Mitr'; } /* 👈 เปลี่ยนสี */
+    .chat-input-area button { background: var(--primary); color: white; border: none; padding: 8px 15px; margin-left: 5px; border-radius: 20px; cursor: pointer; font-family: 'Mitr'; }
     .msg { padding: 8px 12px; border-radius: 15px; max-width: 80%; font-size: 1rem; }
-    .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; } /* 👈 เปลี่ยนสี */
+    .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
     .msg-admin { background: #e0e0e0; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
     #toast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.8); color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 2000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 1rem; opacity: 0; transition: opacity 0.3s, visibility 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
     #toast.show { visibility: visible; opacity: 1; }
@@ -103,9 +100,57 @@
     .empty-fav { grid-column: span 2; text-align: center; color: #999; padding: 20px; }
     .profile-header-edit { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
     .profile-img-large { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 10px; }
-    .upload-label { cursor: pointer; color: var(--primary); font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #F3F0FF; padding: 5px 15px; border-radius: 20px; transition: 0.2s; } /* 👈 เปลี่ยนสี */
-    .upload-label:hover { background: #E9E4FF; } /* 👈 เปลี่ยนสี */
+    .upload-label { cursor: pointer; color: var(--primary); font-size: 0.9rem; display: flex; align-items: center; gap: 5px; background: #F3F0FF; padding: 5px 15px; border-radius: 20px; transition: 0.2s; }
+    .upload-label:hover { background: #E9E4FF; }
     .logout-btn { width: 100%; background: #eee; color: #333; margin-top: 10px; font-family: 'Mitr'; font-weight:600; }
+    .size-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+    .size-btn { padding: 8px 12px; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; background: white; font-family: 'Mitr'; }
+    .size-btn.active { border-color: var(--primary); background: #F3F0FF; color: var(--primary); font-weight: 600; }
+    
+    /* (1) CSS: เพิ่มสไตล์สำหรับปุ่มที่ 'หมด' */
+    .size-btn:disabled { 
+      background: #f9f9f9; color: #ccc; cursor: not-allowed; 
+      text-decoration: line-through; /* ขีดฆ่า */
+    }
+
+    /* --- (CSS ใหม่สำหรับปุ่มตัวเลือก) --- */
+    .msg-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    /* ทำให้ปุ่มในแชทแอดมินดูโปร่งแสงเล็กน้อย */
+    .msg-admin .msg-options {
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 10px;
+    }
+    .option-btn {
+      background: #F3F0FF;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Mitr', sans-serif;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.2s;
+    }
+    .option-btn:hover {
+      background: #E9E4FF;
+      transform: scale(1.02);
+    }
+    /* สไตล์สำหรับข้อความที่บอกว่า "เลือกแล้ว" */
+    .option-btn-selected {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin: 0;
+      padding-top: 5px;
+      text-align: center;
+      font-style: italic;
+    }
+
   </style>
 </head>
 <body>
@@ -131,10 +176,12 @@
 
   <div class="category-bar" id="categoryBar">
     <div class="cat-item active" onclick="filterCategory('ทั้งหมด', this)">ทั้งหมด</div>
-    <div class="cat-item" onclick="filterCategory('เสื้อผ้าแฟชั่น', this)">เสื้อผ้าผช/ผญ</div>
-    <div class="cat-item" onclick="filterCategory('กางเกง', this)">กางเกงผช/ผญ</div>
+    <div class="cat-item" onclick="filterCategory('เสื้อผ้าแฟชั่น', this)">เสื้อผ้าผช./ผญ.</div>
+    <div class="cat-item" onclick="filterCategory('กางเกง', this)">กางเกงผช./ผญ.</div>
     <div class="cat-item" onclick="filterCategory('เสื้อฮู้ด', this)">เสื้อฮู้ด</div>
     <div class="cat-item" onclick="filterCategory('เครื่องประดับ', this)">เครื่องประดับ</div>
+    <div class="cat-item" onclick="filterCategory('หมวก', this)">หมวก</div>
+    <div class="cat-item" onclick="filterCategory('รองเท้า', this)">รองเท้า</div>
   </div>
 
   <div id="toast"><i class="fas fa-check-circle"></i> <span>ข้อความแจ้งเตือน</span></div>
@@ -144,7 +191,6 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('profileModal')">&times;</span>
       <h2>👤 แก้ไขโปรไฟล์</h2>
-      
       <div class="profile-header-edit">
         <img src="https://via.placeholder.com/100" class="profile-img-large" id="editAvatarPreview">
         <label for="fileInput" class="upload-label">
@@ -152,17 +198,14 @@
         </label>
         <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="previewImage(event)">
       </div>
-      
       <div class="form-group">
         <label>อีเมล</label>
         <input type="text" id="editEmail" class="form-control" disabled style="background:#f9f9f9; color:#888;">
       </div>
-      
       <div class="form-group">
         <label>ชื่อที่แสดง (ชื่อเล่น)</label>
         <input type="text" id="editName" class="form-control" placeholder="ตั้งชื่อของคุณ...">
       </div>
-
       <button class="checkout-btn" onclick="saveProfile()">บันทึกการเปลี่ยนแปลง</button>
       <button class="checkout-btn logout-btn" onclick="closeModal('profileModal'); openLogoutConfirm()">ออกจากระบบ</button>
     </div>
@@ -171,16 +214,27 @@
   <div id="qtyModal" class="modal">
     <div class="modal-content" style="max-width: 400px;">
       <span class="close-btn" onclick="closeModal('qtyModal')">&times;</span>
-      <h3 style="margin-top:0;">เลือกจำนวนสินค้า</h3>
+      <h3 style="margin-top:0;">เลือกไซส์และจำนวน</h3>
       <div class="modal-product-info">
         <img id="qtyImg" class="modal-product-img" src="">
-        <div><div id="qtyName" style="font-weight:bold; margin-bottom:5px;"></div><div id="qtyPrice" style="color:var(--primary);"></div><div id="qtyStock" style="font-size:0.9rem; color:#888;"></div></div>
+        <div>
+          <div id="qtyName" style="font-weight:bold; margin-bottom:5px;"></div>
+          <div id="qtyPrice" style="color:var(--primary);"></div>
+          <div id="qtyTotalStock" style="font-size:0.9rem; color:#888;"></div>
+        </div>
       </div>
-      <div class="qty-selector">
+      
+      <label style="font-weight: 600; margin-bottom: 10px; display: block; color: #555;">เลือกไซส์:</label>
+      <div id="sizeSelector" class="size-selector">
+        </div>
+      
+      <label style="font-weight: 600; margin-bottom: 10px; display: block; color: #555;">เลือกจำนวน:</label>
+      <div class="qty-selector" style="margin-top:0;">
         <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
         <input type="text" id="qtyDisplay" class="qty-display" value="1" readonly>
         <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
       </div>
+      
       <button class="checkout-btn" onclick="submitToCart()">ยืนยันใส่ตะกร้า</button>
     </div>
   </div>
@@ -190,29 +244,24 @@
       <span class="close-btn" onclick="closeModal('cartModal')">&times;</span>
       <h2>🛒 ตระกร้าสินค้า</h2>
       <div id="cartItemsContainer"><p>ยังไม่มีสินค้าในตระกร้า</p></div>
-      
       <div class="coupon-box" style="margin-top: 15px; display:flex; gap:10px;">
         <input type="text" id="couponInput" class="form-control" placeholder="กรอกโค้ดส่วนลด" style="margin:0; font-family:'Mitr';">
         <button id="couponBtn" onclick="applyCoupon()" style="width:auto; padding: 0 20px; font-size: 1rem; margin:0; font-family:'Mitr';">ใช้โค้ด</button>
       </div>
-
       <div style="margin-top: 20px; border-top: 2px dashed #ddd; padding-top:10px; font-size:1rem; display:flex; flex-direction:column; gap: 5px;">
         <div style="display:flex; justify-content:space-between;">
           <span>ยอดรวม (Subtotal)</span>
           <span id="subTotalPrice">฿0</span>
         </div>
-        
         <div id="discountDisplay" style="display:flex; justify-content:space-between; color:green; display:none;">
           <span>ส่วนลด (<span id="couponCodeDisplay"></span>)</span>
           <span id="discountAmount"></span>
         </div>
-        
         <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:600; margin-top:5px;">
           <span>ยอดรวมทั้งหมด</span>
           <span id="totalPrice" style="color:var(--primary)">฿0</span>
         </div>
       </div>
-      
       <button class="checkout-btn" onclick="openPayment()">ดำเนินการชำระเงิน</button>
     </div>
   </div>
@@ -298,13 +347,13 @@
       <button onclick="sendMsg()">ส่ง</button>
     </div>
   </div>
-
+  
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
   <script>
-    // --- (JavaScript ทั้งหมดคงเดิม) ---
+    // --- (Firebase Config เหมือนเดิม) ---
     const firebaseConfig = {
       apiKey: "AIzaSyA7lELq82KxJ0sFDf6jKmWPDFKpKqHJp0c",
       authDomain: "king007-c72e2.firebaseapp.com",
@@ -326,14 +375,16 @@
     });
     // --- ⛔ --------------------------- ⛔ ---
 
+    // (3) JS: เพิ่มตัวแปรสำหรับสต็อกของไซส์ที่เลือก
     let allProducts=[], cart=[], userFavorites=[];
-    let currentSelectedId=null, currentQty=1;
+    let currentSelectedId=null, currentQty=1, currentSelectedSize=null;
+    let currentSelectedSizeStock = null; // 👈 เพิ่มตัวแปรนี้
     
-    // 🔥 2. JS: เปลี่ยนตัวแปรราคา เป็นแบบแยกส่วน 🔥
+    // (ตัวแปรส่วนลด เหมือนเดิม)
     let subtotalAmount = 0;
     let discountApplied = 0;
     let finalTotalAmount = 0;
-    let currentDiscount = { code: null, type: null, value: 0 }; // ตัวแปรเก็บส่วนลดที่ใช้
+    let currentDiscount = { code: null, type: null, value: 0 };
     
     let userId = localStorage.getItem('shop_userId');
     if (!userId) { userId = 'guest_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('shop_userId', userId); }
@@ -344,7 +395,6 @@
           userId = user.uid;
           document.getElementById('loginBtn').style.display = 'none';
           document.getElementById('userProfileBtn').style.display = 'flex';
-          
           listenToChat();
           loadFavorites();
           await loadUserProfile(user); 
@@ -354,7 +404,7 @@
           listenToChat();
         }
       });
-      await checkAndSeedData(); // (ใช้ฟังก์ชันสร้างสินค้าตัวอย่างจากไฟล์เดิม)
+      await checkAndSeedData(); // 👈 (4) JS: แก้ไขฟังก์ชันนี้
       loadProductsFromDB();
       
       // --- ระบบลากแชท (เหมือนเดิม) ---
@@ -363,55 +413,38 @@
       const chatButton = document.getElementById('chatBtn');
       makeDraggable(chatWindow, chatHeader, null);
       makeDraggable(chatButton, chatButton, toggleChat);
-      //// --- ฟังก์ชันลากแชท (ฉบับแก้ไข) ---
     function makeDraggable(element, handle, onClickCallback) {
       let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
       let dragged = false; 
-
-      // 1. เพิ่ม Event Listener ทั้งเมาส์และทัชสกรีน
       handle.onmousedown = dragStart;
       handle.ontouchstart = dragStart;
-
       function dragStart(e) {
         e = e || window.event;
         dragged = false; 
-
-        // 2. ตรวจสอบว่าเป็นทัชสกรีนหรือเมาส์ เพื่อดึงค่าพิกัดเริ่มต้น
         if (e.type === 'touchstart') {
           pos3 = e.touches[0].clientX;
           pos4 = e.touches[0].clientY;
         } else {
-          e.preventDefault(); // ป้องกันการเลือกข้อความตอนคลิกเมาส์
+          e.preventDefault(); 
           pos3 = e.clientX;
           pos4 = e.clientY;
         }
-        
-        // (โค้ดเดิมสำหรับกำหนดตำแหน่งเริ่มต้น)
         if (element.style.top === "" || element.style.left === "") {
           const rect = element.getBoundingClientRect();
           element.style.top = rect.top + 'px';
           element.style.left = rect.left + 'px';
           element.style.bottom = 'auto'; element.style.right = 'auto';
         }
-
-        // 3. เพิ่ม Listener ตอนจบ (up/end) และตอนลาก (move) ทั้งสองแบบ
         document.onmouseup = dragEnd;
         document.ontouchend = dragEnd;
         document.onmousemove = elementDrag;
         document.ontouchmove = elementDrag;
-        
         handle.style.cursor = 'grabbing'; 
       }
-
       function elementDrag(e) {
         e = e || window.event;
-        
-        // 4. ป้องกันหน้าจอเลื่อน (scroll) ขณะลากบนมือถือ
         e.preventDefault(); 
-        
         let clientX, clientY;
-        
-        // 5. ดึงค่า X, Y จากทัชสกรีนหรือเมาส์
         if (e.type === 'touchmove') {
           clientX = e.touches[0].clientX;
           clientY = e.touches[0].clientY;
@@ -419,35 +452,26 @@
           clientX = e.clientX;
           clientY = e.clientY;
         }
-
         dragged = true; 
         pos1 = pos3 - clientX;
         pos2 = pos4 - clientY;
         pos3 = clientX;
         pos4 = clientY;
-        
-        // (โค้ดเดิมสำหรับคำนวณตำแหน่งใหม่และเช็คขอบเขต)
         let newTop = element.offsetTop - pos2;
         let newLeft = element.offsetLeft - pos1;
         if (newTop < 0) newTop = 0;
         if (newLeft < 0) newLeft = 0;
         if (newTop + element.clientHeight > window.innerHeight) newTop = window.innerHeight - element.clientHeight;
         if (newLeft + element.clientWidth > window.innerWidth) newLeft = window.innerWidth - element.clientWidth;
-        
         element.style.top = newTop + "px";
         element.style.left = newLeft + "px";
       }
-
       function dragEnd() {
-        // 6. ลบ Listener ทั้งหมดออก (ทั้งเมาส์และทัช)
         document.onmouseup = null; 
         document.ontouchend = null;
         document.onmousemove = null; 
         document.ontouchmove = null;
-
         handle.style.cursor = 'grab'; 
-        
-        // (โค้ดเดิมสำหรับเช็คว่าเป็นการคลิกหรือลาก)
         if (!dragged && onClickCallback) { 
           onClickCallback(); 
         }
@@ -456,50 +480,6 @@
     // --- (จบฟังก์ชันลาก) ---
     };
     
-    // --- ฟังก์ชันลากแชท (เหมือนเดิม) ---
-    function makeDraggable(element, handle, onClickCallback) {
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      let dragged = false; 
-      handle.onmousedown = dragMouseDown;
-
-      function dragMouseDown(e) {
-        e = e || window.event; e.preventDefault(); 
-        dragged = false; pos3 = e.clientX; pos4 = e.clientY;
-        if (element.style.top === "" || element.style.left === "") {
-          const rect = element.getBoundingClientRect();
-          element.style.top = rect.top + 'px';
-          element.style.left = rect.left + 'px';
-          element.style.bottom = 'auto'; element.style.right = 'auto';
-        }
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-        handle.style.cursor = 'grabbing'; 
-      }
-
-      function elementDrag(e) {
-        e = e || window.event; e.preventDefault();
-        dragged = true; 
-        pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-        pos3 = e.clientX; pos4 = e.clientY;
-        let newTop = element.offsetTop - pos2;
-        let newLeft = element.offsetLeft - pos1;
-        if (newTop < 0) newTop = 0;
-        if (newLeft < 0) newLeft = 0;
-        if (newTop + element.clientHeight > window.innerHeight) newTop = window.innerHeight - element.clientHeight;
-        if (newLeft + element.clientWidth > window.innerWidth) newLeft = window.innerWidth - element.clientWidth;
-        element.style.top = newTop + "px";
-        element.style.left = newLeft + "px";
-      }
-
-      function closeDragElement() {
-        document.onmouseup = null; document.onmousemove = null;
-        handle.style.cursor = 'grab'; 
-        if (!dragged && onClickCallback) { onClickCallback(); }
-      }
-    }
-    // --- (จบฟังก์ชันลาก) ---
-
-
     // --- ฟังก์ชันโปรไฟล์ (เหมือนเดิม) ---
     let currentUserData = {};
     async function loadUserProfile(user) {
@@ -563,44 +543,103 @@
     // --- (จบฟังก์ชันโปรไฟล์) ---
 
 
-    // --- ฟังก์ชันสร้างสินค้า (เหมือนเดิม) ---
+    // --- (4) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันสร้างสินค้า (checkAndSeedData) ⭐️⭐️ ---
     async function checkAndSeedData() {
       const s = await db.collection('products').limit(1).get();
       if(s.empty) {
-        console.log("ฐานข้อมูลว่าง กำลังเพิ่มสินค้าตัวอย่าง...");
+        console.log("ฐานข้อมูลว่าง กำลังเพิ่มสินค้าตัวอย่าง (เวอร์ชันสต็อกตามไซส์)...");
         const b = db.batch();
-        const categories = ['เสื้อผ้าแฟชั่น', 'กางเกง', 'เสื้อฮู้ด', 'เครื่องประดับ']; 
-        categories.forEach(c => {
+        
+        const categories = [
+          'เสื้อผ้าแฟชั่น', 'กางเกง', 'เสื้อฮู้ด', 
+          'เครื่องประดับ', 'หมวก', 'รองเท้า'
+        ]; 
+        
+        // (4.1) JS: สร้างฟังก์ชัน helper สำหรับสร้างสต็อก
+        function generateStock(sizes) {
+          let sizeStock = {};
+          let totalStock = 0;
+          
+          // กำหนดสต็อกสุ่ม (5-20 ชิ้น) ให้แต่ละไซส์
+          sizes.forEach(size => {
+            const s = Math.floor(Math.random() * 16) + 5; // สุ่ม 5-20
+            sizeStock[size] = s;
+            totalStock += s;
+          });
+          
+          // สุ่มให้ 1 ไซส์หมด (เพื่อทดสอบ)
+          if (sizes.length > 1) {
+            const zeroIndex = Math.floor(Math.random() * sizes.length);
+            const sizeToZero = sizes[zeroIndex];
+            totalStock -= sizeStock[sizeToZero]; // ลบสต็อกที่เคยบวกไป
+            sizeStock[sizeToZero] = 0; // ตั้งค่าเป็น 0
+          }
+          
+          return { sizeStock, totalStock };
+        }
+
+        for (const c of categories) {
           let keyword = 'item'; 
-          if (c === 'เสื้อผ้าแฟชั่น') keyword = 'shirt';
-          if (c === 'กางเกง') keyword = 'jeans';
-          if (c === 'เสื้อฮู้ด') keyword = 'hoodie';
-          if (c === 'เครื่องประดับ') keyword = 'jewelry';
-          for(let i=1;i<=20;i++) {
+          let sizes = ['One Size']; // ค่าเริ่มต้น
+          let count = 20;
+
+          if (c === 'เสื้อผ้าแฟชั่น') {
+            keyword = 'shirt';
+            sizes = ['S (อก 36")', 'M (อก 40")', 'L (อก 44")', 'XL (อก 48")'];
+          } else if (c === 'กางเกง') {
+            keyword = 'jeans';
+            sizes = ['28', '30', '32', '34', '36'];
+          } else if (c === 'เสื้อฮู้ด') {
+            keyword = 'hoodie';
+            sizes = ['S (อก 36")', 'M (อก 40")', 'L (อก 44")', 'XL (อก 48")'];
+          } else if (c === 'เครื่องประดับ') {
+            keyword = 'jewelry';
+            sizes = ['Free Size'];
+          } else if (c === 'หมวก') {
+            keyword = 'hat';
+            sizes = ['Free Size']; 
+            count = 10;
+          } else if (c === 'รองเท้า') {
+            keyword = 'shoe';
+            sizes = ['39', '40', '41', '42', '43'];
+            count = 10;
+          }
+
+          // (4.2) JS: สร้างสต็อกสำหรับสินค้าแต่ละชิ้น
+          for(let i=1; i<=count; i++) {
+            
+            // สร้าง stock object
+            const { sizeStock, totalStock } = generateStock(sizes);
+
             b.set(db.collection('products').doc(), {
               name: `${c} ${i}`, 
               price: Math.floor(Math.random()*500)+100, 
-              stock: 20, 
+              // stock: 20, (ลบอันเก่า)
+              // sizes: sizes, (ลบอันเก่า)
+              sizeStock: sizeStock,   // 👈 (เพิ่มอันใหม่)
+              totalStock: totalStock, // 👈 (เพิ่มอันใหม่)
               category: c, 
               image: `https://source.unsplash.com/300x300/?${keyword}&sig=${i}`, 
               sold: 0
             });
           }
-        });
+        }
         await b.commit();
-        console.log("เพิ่มสินค้าตัวอย่าง 80 ชิ้นเรียบร้อย!");
+        console.log("เพิ่มสินค้าตัวอย่าง (v.สต็อกตามไซส์) เรียบร้อย!");
       }
     }
-    // --- (จบฟังก์ชันสร้างสินค้า) ---
+    // --- (4) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันสร้างสินค้า ⭐️⭐️ ---
     
 
-    // --- (ฟังก์ชันสินค้าอื่นๆ เหมือนเดิม) ---
+    // --- (5) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันแสดงสินค้า (renderProducts) ⭐️⭐️ ---
     function loadProductsFromDB() { db.collection('products').onSnapshot(s => { allProducts=[]; s.forEach(d=>allProducts.push({id:d.id,...d.data()})); renderProducts(allProducts); }); }
+    
     function renderProducts(p) {
       const c = document.getElementById('productList'); c.innerHTML='';
       p.forEach(x => {
-        const isOut = x.stock <= 0;
-        const stockText = isOut ? '<span style="color:var(--primary);">สินค้าหมด</span>' : `เหลือ ${x.stock} ชิ้น`;
+        // (5.1) JS: เปลี่ยนมาเช็ก totalStock แทน stock
+        const isOut = x.totalStock <= 0; 
+        const stockText = isOut ? '<span style="color:var(--primary);">สินค้าหมด</span>' : `เหลือ ${x.totalStock} ชิ้น`; // 👈
         const soldText = `ขายแล้ว ${x.sold || 0} ชิ้น`;
         const isFav = userFavorites.includes(x.id);
 
@@ -610,11 +649,17 @@
             <img src="${x.image}" class="p-img">
             <div class="p-details">
               <div><div class="p-name">${x.name}</div><div class="p-stock">${stockText} | ${soldText}</div></div>
-              <div><div class="p-price">฿${x.price}</div><button class="p-btn" onclick="openQtyModal('${x.id}')" ${isOut?'disabled':''}>${isOut?'หมด':'ใส่ตะกร้า'}</button></div>
+              <div><div class="p-price">฿${x.price}</div>
+              <button class="p-btn" onclick="openQtyModal('${x.id}')" ${isOut?'disabled':''}>${isOut?'หมด':'ใส่ตะกร้า'}</button>
+              </div>
             </div>
           </div>`;
       });
     }
+    // --- (5) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันแสดงสินค้า ⭐️⭐️ ---
+
+
+    // --- (ฟังก์ชัน Favorite เหมือนเดิม) ---
     async function loadFavorites() {
        const doc = await db.collection('favorites').doc(userId).get();
        userFavorites = doc.exists ? (doc.data().ids || []) : [];
@@ -643,96 +688,222 @@
     }
     function filterCategory(c,el) { document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active')); el.classList.add('active'); renderProducts(c==='ทั้งหมด'?allProducts:allProducts.filter(x=>x.category===c)); }
     function filterProducts() { const t=document.getElementById('searchInput').value.toLowerCase(); renderProducts(allProducts.filter(x=>x.name.toLowerCase().includes(t))); }
+    
+    
+    // --- (6) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันเปิด Modal (openQtyModal) ⭐️⭐️ ---
     function openQtyModal(id) {
       const p = allProducts.find(x=>x.id===id);
-      if(!p || p.stock<=0) return;
-      currentSelectedId=id; currentQty=1;
+      if(!p || p.totalStock <= 0) return; // 👈 (เช็ก totalStock)
+      
+      currentSelectedId = id; 
+      currentQty = 1;
+      currentSelectedSize = null; 
+      currentSelectedSizeStock = null; // 👈 (รีเซ็ตสต็อกที่เลือก)
+      
       document.getElementById('qtyImg').src=p.image;
       document.getElementById('qtyName').innerText=p.name;
       document.getElementById('qtyPrice').innerText='฿'+p.price;
-      document.getElementById('qtyStock').innerText='มีสินค้า: '+p.stock;
+      // 👈 (เปลี่ยนเป็น totalStock)
+      document.getElementById('qtyTotalStock').innerText='มีสินค้า: '+p.totalStock; 
       document.getElementById('qtyDisplay').value=1;
+      
+      // (6.1) JS: สร้างปุ่มเลือกไซส์ใหม่ (แสดงสต็อก)
+      const sizeContainer = document.getElementById('sizeSelector');
+      sizeContainer.innerHTML = ''; 
+      
+      // 👈 (เช็กจาก p.sizeStock)
+      if (p.sizeStock && Object.keys(p.sizeStock).length > 0) {
+        
+        const sizeKeys = Object.keys(p.sizeStock);
+        let firstAvailableButton = null;
+
+        sizeKeys.forEach(size => {
+          const stock = p.sizeStock[size]; // 👈 ดึงสต็อกของไซส์นี้
+          
+          const btn = document.createElement('button');
+          btn.className = 'size-btn';
+          // 👈 แสดงสต็อกบนปุ่ม
+          btn.textContent = `${size} (เหลือ ${stock})`; 
+          
+          if (stock <= 0) {
+            btn.disabled = true; // 👈 ปิดปุ่มถ้าสต็อกหมด
+          }
+          
+          btn.onclick = () => { 
+            // 👈 ส่ง 'stock' ไปที่ฟังก์ชันด้วย
+            selectSize(size, stock, btn); 
+          };
+          
+          sizeContainer.appendChild(btn);
+          
+          // (6.2) JS: หาปุ่มแรกที่กดได้ เพื่อ auto-select
+          if (stock > 0 && !firstAvailableButton) {
+            firstAvailableButton = btn;
+          }
+        });
+
+        // (6.3) JS: ถ้ามีปุ่มที่กดได้ (หรือมีแค่ปุ่มเดียว) ให้คลิกอัตโนมัติ
+        if (sizeKeys.length === 1 || firstAvailableButton) {
+            setTimeout(() => { 
+               (firstAvailableButton || sizeContainer.querySelector('.size-btn')).click();
+            }, 0);
+        }
+      } else {
+        // กรณีสำรอง (ไม่ควรเกิดขึ้นถ้าใช้ checkAndSeedData ใหม่)
+        const btn = document.createElement('button');
+        btn.className = 'size-btn active';
+        btn.textContent = 'One Size (เหลือ ?)';
+        sizeContainer.appendChild(btn);
+      }
+
       document.getElementById('qtyModal').style.display='flex';
     }
-    function changeQty(n) {
-      const p = allProducts.find(x=>x.id===currentSelectedId);
-      if(currentQty+n >=1 && currentQty+n <= p.stock) { currentQty+=n; document.getElementById('qtyDisplay').value=currentQty; }
+    // --- (6) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันเปิด Modal ⭐️⭐️ ---
+
+
+    // --- (7) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันเลือกไซส์ (selectSize) ⭐️⭐️ ---
+    function selectSize(size, stock, el) { // 👈 รับ 'stock' มาด้วย
+      currentSelectedSize = size;
+      currentSelectedSizeStock = stock; // 👈 บันทึกสต็อกของไซส์ที่เลือก
+      
+      // (ลบ .active ออกจากปุ่มอื่น)
+      document.querySelectorAll('#sizeSelector .size-btn').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
+      
+      // (7.1) JS: ตรวจสอบจำนวนที่เลือกไว้
+      // ถ้าจำนวนที่เลือกไว้ (currentQty) มันเกินสต็อกของไซส์ใหม่ที่เพิ่งกด
+      // ให้ปรับ currentQty ลงมาเท่ากับสต็อกสูงสุด
+      if (currentQty > stock && stock > 0) {
+        currentQty = stock;
+        document.getElementById('qtyDisplay').value = currentQty;
+      } else if (stock === 0) {
+        currentQty = 1; // ตั้งเป็น 1 (แต่ตอนกดยืนยันจะเด้งบอกว่าหมด)
+        document.getElementById('qtyDisplay').value = 1;
+      }
     }
+    // --- (7) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันเลือกไซส์ ⭐️⭐️ ---
+
+
+    // --- (8) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันเปลี่ยนจำนวน (changeQty) ⭐️⭐️ ---
+    function changeQty(n) {
+      // (8.1) JS: กำหนดเพดานสต็อก
+      let stockLimit = 99; // (ค่าเริ่มต้นถ้ายังไม่เลือกไซส์)
+      
+      if (currentSelectedSizeStock !== null) {
+        // ถ้าเลือกไซส์แล้ว ให้ใช้สต็อกของไซส์นั้น
+        stockLimit = currentSelectedSizeStock;
+      } else {
+        // ถ้ายังไม่เลือกไซส์ ใช้ totalStock (เผื่อไว้)
+        const p = allProducts.find(x=>x.id===currentSelectedId);
+        if (p) stockLimit = p.totalStock;
+      }
+
+      // (8.2) JS: ตรวจสอบไม่ให้เกินเพดาน
+      if (currentQty + n >= 1 && currentQty + n <= stockLimit) {
+        currentQty += n;
+        document.getElementById('qtyDisplay').value = currentQty;
+      } else if (currentQty + n > stockLimit) {
+        showToast('สินค้ามีไม่เกิน ' + stockLimit + ' ชิ้น', true);
+        currentQty = stockLimit; // ตั้งค่าสูงสุด
+        document.getElementById('qtyDisplay').value = currentQty;
+      }
+    }
+    // --- (8) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันเปลี่ยนจำนวน ⭐️⭐️ ---
+
     
-    // --- (ฟังก์ชันตะกร้า เหมือนเดิม) ---
+    // --- (9) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันยืนยันใส่ตะกร้า (submitToCart) ⭐️⭐️ ---
     function submitToCart() {
+      if (!currentSelectedSize) {
+        return showToast('กรุณาเลือกไซส์', true);
+      }
+      
+      // (9.1) JS: ตรวจสอบสต็อกของไซส์ที่เลือกอีกครั้ง
+      if (currentQty > currentSelectedSizeStock) {
+        return showToast(`ไซส์นี้เหลือ ${currentSelectedSizeStock} ชิ้น`, true);
+      }
+      if (currentSelectedSizeStock <= 0) {
+         return showToast('ไซส์นี้สินค้าหมดแล้ว', true);
+      }
+      
       const p = allProducts.find(x=>x.id===currentSelectedId);
-      const ex = cart.find(x=>x.id===currentSelectedId);
+      const ex = cart.find(x=>x.id===currentSelectedId && x.size === currentSelectedSize);
+      
       if(ex) {
-        if(ex.qty+currentQty <= p.stock) ex.qty+=currentQty;
-        else { ex.qty = p.stock; showToast('ปรับจำนวนสินค้าเท่าที่มีในสต็อกแล้ว', true); }
-      } else cart.push({...p, qty:currentQty});
+        // (9.2) JS: เช็กสต็อกเทียบกับของในตะกร้า
+        if(ex.qty + currentQty <= currentSelectedSizeStock) {
+          ex.qty += currentQty;
+        } else { 
+          ex.qty = currentSelectedSizeStock; 
+          showToast('ปรับจำนวนสินค้าเท่าที่มีในสต็อกแล้ว', true); 
+        }
+      } else {
+        cart.push({...p, qty:currentQty, size: currentSelectedSize});
+      }
       updateCart(); showToast('เพิ่มลงตะกร้าแล้ว'); closeModal('qtyModal');
     }
+    // --- (9) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันยืนยันใส่ตะกร้า ⭐️⭐️ ---
+
+
+    // --- (10) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันปรับตะกร้า (adjustCartQty) ⭐️⭐️ ---
     function adjustCartQty(idx, change) {
       const item = cart[idx];
       const product = allProducts.find(p => p.id === item.id);
-      const maxStock = product ? product.stock : item.qty; 
+      
+      // (10.1) JS: ดึงสต็อกของไซส์นั้นๆ
+      const maxStock = product ? product.sizeStock[item.size] : item.qty; 
+      
       let newQty = item.qty + change;
-      if(newQty > maxStock) { newQty = maxStock; showToast('สินค้ามีจำกัด ' + maxStock + ' ชิ้น', true); }
+      if(newQty > maxStock) { 
+        newQty = maxStock; 
+        showToast('สินค้ามีจำกัด ' + maxStock + ' ชิ้น', true); 
+      }
       if(newQty < 1) newQty = 1;
       cart[idx].qty = newQty;
       openCart(); updateCart();
     }
+    // --- (10) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันปรับตะกร้า ⭐️⭐️ ---
+
     function updateCart() { document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0); }
 
 
-    // 🔥 3. JS: เพิ่มฟังก์ชันสำหรับใช้โค้ดส่วนลด 🔥
+    // --- (ฟังก์ชันคูปอง และ เปิดตะกร้า เหมือนเดิม) ---
     async function applyCoupon() {
       const codeInput = document.getElementById('couponInput');
-      const code = codeInput.value.trim().toUpperCase(); // ใช้ .toUpperCase() เพื่อให้พิมพ์เล็ก-ใหญ่ได้
+      const code = codeInput.value.trim().toUpperCase();
       if (!code) return showToast('กรุณากรอกโค้ด', true);
-
       const btn = document.getElementById('couponBtn');
-      btn.disabled = true;
-      btn.innerText = 'รอ...';
-
+      btn.disabled = true; btn.innerText = 'รอ...';
       try {
-        // (เราจะใช้ข้อมูลโค้ดแบบ Hardcode ในนี้ก่อน)
-        // คุณต้องไปสร้าง Collection 'coupons' ใน Firestore เอง
         const couponRef = db.collection('coupons').doc(code);
         const couponDoc = await couponRef.get();
-
         if (!couponDoc.exists) {
           showToast('โค้ดส่วนลดไม่ถูกต้อง', true);
-          currentDiscount = { code: null, type: null, value: 0 }; // รีเซ็ต
+          currentDiscount = { code: null, type: null, value: 0 };
         } else {
           const couponData = couponDoc.data();
-          
-          // (คุณสามารถเพิ่มเงื่อนไขอื่นๆ ได้ที่นี่ เช่น วันหมดอายุ, จำนวนครั้งที่ใช้)
-          
           showToast('ใช้โค้ดส่วนลดสำเร็จ!');
-          currentDiscount = { code: code, ...couponData }; // บันทึกส่วนลด
+          currentDiscount = { code: code, ...couponData };
         }
       } catch (e) {
         console.error("Error applying coupon:", e);
         showToast('เกิดข้อผิดพลาด', true);
         currentDiscount = { code: null, type: null, value: 0 };
       } finally {
-        btn.disabled = false;
-        btn.innerText = 'ใช้โค้ด';
-        openCart(); // 🔥 เรียก openCart() เพื่อคำนวณราคาใหม่
+        btn.disabled = false; btn.innerText = 'ใช้โค้ด';
+        openCart(); 
       }
     }
-
-
-    // 🔥 4. JS: แก้ไข openCart() เพื่อคำนวณส่วนลด 🔥
     function openCart() {
       const c = document.getElementById('cartItemsContainer'); 
       c.innerHTML = cart.length ? '' : '<p>ว่างเปล่า</p>';
-      
-      subtotalAmount = 0; // รีเซ็ตยอดรวมย่อย
+      subtotalAmount = 0; 
       cart.forEach((x,i) => { 
-        subtotalAmount += (x.price * x.qty); // คำนวณยอดรวมย่อย
+        subtotalAmount += (x.price * x.qty); 
+        const sizeDisplay = (x.size && x.size !== 'One Size') ? ` (ไซส์: ${x.size})` : '';
         c.innerHTML+=`
           <div class="cart-item">
             <div class="cart-item-info">
-              <b>${x.name}</b><br>
+              <b>${x.name}</b><span style="font-size: 0.9rem; color: #555;">${sizeDisplay}</span><br>
               <span style="color:var(--primary);">฿${x.price}</span>
               <div class="mini-qty-box">
                 <button class="mini-qty-btn" onclick="adjustCartQty(${i}, -1)">-</button>
@@ -747,42 +918,29 @@
           </div>`; 
       });
 
-      // --- คำนวณส่วนลด ---
-      discountApplied = 0; // รีเซ็ตส่วนลด
+      discountApplied = 0;
       const discountDisplay = document.getElementById('discountDisplay');
-
       if (currentDiscount.code && subtotalAmount > 0) {
         if (currentDiscount.type === 'percent') {
-          // ส่วนลดแบบ %
           discountApplied = (subtotalAmount * currentDiscount.value) / 100;
         } else if (currentDiscount.type === 'fixed') {
-          // ส่วนลดแบบคงที่
           discountApplied = currentDiscount.value;
         }
-
-        // ตรวจสอบว่าส่วนลดไม่เกินยอดรวม
         if (discountApplied > subtotalAmount) {
           discountApplied = subtotalAmount;
         }
-        
-        finalTotalAmount = subtotalAmount - discountApplied; // ยอดสุทธิ
-
-        // อัปเดต UI ส่วนลด
+        finalTotalAmount = subtotalAmount - discountApplied; 
         document.getElementById('couponCodeDisplay').innerText = currentDiscount.code;
-        document.getElementById('discountAmount').innerText = `-฿${discountApplied.toFixed(0)}`; // .toFixed(0) เพื่อไม่เอาทศนิยม
+        document.getElementById('discountAmount').innerText = `-฿${discountApplied.toFixed(0)}`;
         discountDisplay.style.display = 'flex';
       } else {
-        finalTotalAmount = subtotalAmount; // ไม่มีส่วนลด
-        discountDisplay.style.display = 'none'; // ซ่อน UI ส่วนลด
+        finalTotalAmount = subtotalAmount; 
+        discountDisplay.style.display = 'none';
       }
-
-      // อัปเดต UI ราคารวม
       document.getElementById('subTotalPrice').innerText = '฿' + subtotalAmount;
       document.getElementById('totalPrice').innerText = '฿' + finalTotalAmount;
-      
       document.getElementById('cartModal').style.display='flex';
     }
-
     
     // --- (ฟังก์ชันชำระเงิน เหมือนเดิม) ---
     function openPayment() { 
@@ -794,11 +952,11 @@
     function showQR() {
       const b=document.getElementById('bankSelect').value;
       document.getElementById('qrCodeContainer').style.display=b?'block':'none';
-      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0970482500/${finalTotalAmount}`; // 🔥 เปลี่ยนเป็น finalTotalAmount
+      if(b) document.getElementById('qrImage').src=`https://promptpay.io/0970482500/${finalTotalAmount}`;
     }
     
 
-    // 🔥 5. JS: แก้ไข confirmOrder() เพื่อบันทึกส่วนลด 🔥
+    // --- (11) JS: ⭐️⭐️ [START] แก้ไขฟังก์ชันยืนยันคำสั่งซื้อ (confirmOrder) ⭐️⭐️ ---
     async function confirmOrder() {
       const n=document.getElementById('custName').value, p=document.getElementById('custPhone').value, a=document.getElementById('custAddress').value;
       const pm=document.querySelector('input[name="payment"]:checked').value;
@@ -810,20 +968,42 @@
 
       const btn=document.getElementById('confirmPayBtn'); btn.disabled=true; btn.innerText="กำลังบันทึก...";
       try {
+        // (11.1) JS: แก้ไข Transaction ให้ตัดสต็อกตามไซส์
         await Promise.all(cart.map(i => db.runTransaction(async t => {
-          const d = await t.get(db.collection('products').doc(i.id));
-          if(!d.exists) throw "Err";
-          t.update(db.collection('products').doc(i.id), {stock:d.data().stock-i.qty, sold:(d.data().sold||0)+i.qty});
+          const productRef = db.collection('products').doc(i.id);
+          const d = await t.get(productRef);
+          if(!d.exists) throw "สินค้าไม่พบ";
+          
+          const data = d.data();
+          const newSizeStockMap = data.sizeStock; // 1. ดึง Map สต็อกออกมา
+          
+          const oldSizeStock = newSizeStockMap[i.size] || 0; // 2. หาสต็อกของไซส์ที่สั่ง
+          
+          if (oldSizeStock < i.qty) {
+             throw `สินค้า ${i.name} ไซส์ ${i.size} ไม่พอ`;
+          }
+
+          newSizeStockMap[i.size] = oldSizeStock - i.qty; // 3. คำนวณสต็อกไซส์ใหม่
+          
+          const newTotalStock = data.totalStock - i.qty; // 4. คำนวณสต็อกรวมใหม่
+          const newSold = (data.sold || 0) + i.qty;
+
+          // 5. อัปเดตกลับเข้าไป
+          t.update(productRef, {
+            sizeStock: newSizeStockMap, // 👈 อัปเดต Map ทั้งก้อน
+            totalStock: newTotalStock, // 👈 อัปเดตสต็อกรวม
+            sold: newSold
+          });
         })));
         
-        // 🔥 บันทึกข้อมูลส่วนลดลงใน Order
+        // (11.2) JS: บันทึก Order (ส่วนนี้เหมือนเดิม)
         await db.collection('orders').add({
           customer:{name:n,phone:p,address:a}, 
-          items:cart, 
-          subtotal: subtotalAmount, // ยอดก่อนลด
-          discount: discountApplied, // ยอดส่วนลด
-          coupon: currentDiscount.code || '-', // รหัสคูปอง
-          total: finalTotalAmount, // ยอดสุทธิ
+          items:cart,
+          subtotal: subtotalAmount,
+          discount: discountApplied,
+          coupon: currentDiscount.code || '-',
+          total: finalTotalAmount,
           paymentMethod:pm, 
           bank:pm==='bank'?bankName:'-', 
           user:userId, 
@@ -831,25 +1011,27 @@
           timestamp:firebase.firestore.FieldValue.serverTimestamp()
         });
         
-        sendMsgInternal(`[ระบบ] สั่งซื้อสำเร็จ ยอด ฿${finalTotalAmount}`); // แจ้งเตือนด้วยยอดสุทธิ
+        sendMsgInternal(`[ระบบ] สั่งซื้อสำเร็จ ยอด ฿${finalTotalAmount}`);
         
-        cart=[]; // ล้างตะกร้า
-        currentDiscount = { code: null, type: null, value: 0 }; // 🔥 รีเซ็ตคูปองหลังสั่งซื้อ
-        document.getElementById('couponInput').value = ''; // เคลียร์ช่อง
+        cart=[]; 
+        currentDiscount = { code: null, type: null, value: 0 };
+        document.getElementById('couponInput').value = '';
         
-        updateCart(); // อัปเดตป้ายแดง
+        updateCart();
         closeModal('paymentModal');
         document.getElementById('successModal').style.display = 'flex';
       } catch(e){ 
         console.error("Order failed: ", e);
-        showToast('เกิดข้อผิดพลาด', true); 
+        // (11.3) JS: แสดง Error ที่ชัดเจนขึ้น
+        showToast(typeof e === 'string' ? e : 'เกิดข้อผิดพลาด', true); 
       } finally { 
         btn.disabled=false; btn.innerText="ยืนยันการสั่งซื้อ"; 
       }
     }
+    // --- (11) JS: ⭐️⭐️ [END] แก้ไขฟังก์ชันยืนยันคำสั่งซื้อ ⭐️⭐️ ---
 
     
-    // --- (ฟังก์ชันที่เหลือ เหมือนเดิม) ---
+    // --- (ฟังก์ชันประวัติการสั่งซื้อ และ Chat เหมือนเดิม) ---
     async function openHistory() {
       document.getElementById('historyModal').style.display = 'flex';
       const con = document.getElementById('historyContainer');
@@ -860,9 +1042,11 @@
       ords.sort((a,b)=>(b.timestamp?.seconds||0)-(a.timestamp?.seconds||0));
       con.innerHTML = '';
       ords.forEach(o => {
-        let items = ''; o.items.forEach(i => items += `<div class="item-row"><span>${i.name} x${i.qty}</span><span>฿${i.price*i.qty}</span></div>`);
-        // 🔥 แสดงยอดรวม (Total) ที่จ่ายจริงในประวัติ
-        // 👈 เปลี่ยนสี 'orange' เป็น 'var(--primary)'
+        let items = ''; 
+        o.items.forEach(i => {
+          const sizeDisplay = (i.size && i.size !== 'One Size') ? ` (ไซส์: ${i.size})` : '';
+          items += `<div class="item-row"><span>${i.name}${sizeDisplay} x${i.qty}</span><span>฿${i.price*i.qty}</span></div>`;
+        });
         con.innerHTML += `<div class="order-card"><div class="order-header"><span>📅 ${o.timestamp?new Date(o.timestamp.seconds*1000).toLocaleString('th-TH'):'-'}</span><span class="order-status" style="color:${o.status==='completed'?'green':'var(--primary)'}">${o.status==='completed'?'สำเร็จ':'รอจัดส่ง'}</span></div><div class="order-items">${items}</div><div class="order-total">รวม: ฿${o.total}</div></div>`;
       });
     }
@@ -880,21 +1064,84 @@
       db.collection('chats').doc(userId).set({ lastMessage: text, lastActive: firebase.firestore.FieldValue.serverTimestamp(), userId: userId, email: document.getElementById('custName').value || 'Guest' }, { merge: true });
       setTimeout(() => autoReply(text), 1000);
     }
+
+    // (ใหม่!) ฟังก์ชันสำหรับจัดการการคลิกปุ่มตัวเลือก
+    function handleOptionClick(optionText, messageId) {
+      // 1. ส่งข้อความตัวเลือกนั้นเป็นข้อความของผู้ใช้
+      // (ฟังก์ชัน sendMsgInternal จะไปเรียก autoReply ให้อัตโนมัติ)
+      sendMsgInternal(optionText);
+
+      // 2. ปิดการใช้งานปุ่ม (เปลี่ยนปุ่มเป็นข้อความ "เลือกแล้ว")
+      const optionsContainer = document.getElementById(`options-${messageId}`);
+      if (optionsContainer) {
+        optionsContainer.innerHTML = `<div class="option-btn-selected">(เลือก: ${optionText})</div>`;
+      }
+    }
+
     function autoReply(t) {
       let r=''; t=t.toLowerCase();
-      if(t.includes('สวัสดี')) r='สวัสดีครับ มีอะไรให้ช่วยไหมครับ';
+
+      // (แก้ไข) ถ้าผู้ใช้ทักทาย ให้ส่ง "ปุ่มตัวเลือก"
+      if(t.includes('สวัสดี') || t.includes('hello') || t.includes('ดีครับ')) {
+        const welcomeMsg = {
+          sender: 'admin',
+          text: 'สวัสดีครับ! มีอะไรให้ช่วยไหมครับ? สามารถเลือกจากตัวเลือกด้านล่างได้เลยครับ',
+          type: 'options', // 👈 ระบุประเภทเป็น options
+          options: ['สอบถามราคาสินค้า', 'ติดตามสถานะจัดส่ง', 'สอบถามเรื่องอื่นๆ'], // 👈 รายการปุ่ม
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        
+        // ส่งข้อความแบบพิเศษ (ที่มีปุ่ม)
+        db.collection('chats').doc(userId).collection('messages').add(welcomeMsg);
+        db.collection('chats').doc(userId).set({ lastActive: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        return; // ออกจากฟังก์ชันเลย เพราะเราส่งข้อความแบบพิเศษไปแล้ว
+      }
+
+      // (แก้ไข) นี่คือ "คำตอบ" ที่จะตอบกลับเมื่อผู้ใช้ "กดปุ่ม"
+      if(t.includes('ราคาสินค้า')) r='ราคาสินค้าตามป้ายสินค้าเลยครับ';
+      if(t.includes('จัดส่งวันไหน')) r='สินค้าจัดส่งทุกวันไม่มีวันหยุดครับ'; // (คำถามเดิมยังใช้ได้)
+      if(t.includes('สถานะจัดส่ง')) r='คุณสามารถตรวจสอบสถานะได้ที่เมนู "ประวัติการสั่งซื้อ" ครับ';
+      if(t.includes('เรื่องอื่นๆ')) r='กำลังเรียกแอดมินให้สักครู่นะครับ กรุณาพิมพ์คำถามทิ้งไว้ได้เลยครับ';
+
+      // (เหมือนเดิม) ถ้ามีคำตอบ (r) ให้ส่งกลับไป
       if(r) {
          db.collection('chats').doc(userId).collection('messages').add({text:r, sender:'admin', timestamp:firebase.firestore.FieldValue.serverTimestamp()});
          db.collection('chats').doc(userId).set({ lastActive: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
       }
     }
+    
     function listenToChat() {
       db.collection('chats').doc(userId).collection('messages').orderBy('timestamp').onSnapshot(s => {
         const b=document.getElementById('chatBody'); b.innerHTML='<div class="msg msg-admin">สวัสดีครับ!</div>';
-        s.forEach(d=> b.innerHTML+=`<div class="msg ${d.data().sender==='user'?'msg-user':'msg-admin'}">${d.data().text}</div>`);
+        
+        s.forEach(d=> {
+          const data = d.data();
+          const msgId = d.id; // 👈 (ใหม่) ดึง ID ของข้อความ
+          let optionsHtml = '';
+
+          // (ใหม่) ตรวจสอบว่าข้อความนี้มี "ปุ่มตัวเลือก" หรือไม่
+          if (data.type === 'options' && data.options && data.options.length > 0) {
+            // (ใหม่) สร้าง HTML สำหรับปุ่ม
+            optionsHtml = `<div class="msg-options" id="options-${msgId}">`; // 👈 (ใหม่) ใส่ ID ให้ container
+            data.options.forEach(opt => {
+              // (ใหม่) เพิ่ม onclick ให้ปุ่ม
+              optionsHtml += `<button class="option-btn" onclick="handleOptionClick('${opt}', '${msgId}')">${opt}</button>`;
+            });
+            optionsHtml += `</div>`;
+          }
+
+          // (ใหม่) ประกอบร่าง HTML ของข้อความ (เพิ่ม optionsHtml เข้าไป)
+          b.innerHTML+=`
+            <div class="msg ${data.sender==='user'?'msg-user':'msg-admin'}">
+              ${data.text}
+              ${optionsHtml} 
+            </div>`;
+        });
+        
         scrollToBottom();
       });
     }
+
     function closeModal(id){document.getElementById(id).style.display='none';}
     function showToast(text, isError = false){
       const t=document.getElementById('toast');
